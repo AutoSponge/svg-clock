@@ -1,5 +1,5 @@
 // SVG Clock
-// =========
+// ---------
 //
 // This SVG clock demo was build to highlight the following;
 //
@@ -9,12 +9,12 @@
 // - Design impacts on complexity and maintainability
 //
 // HTML5
-// =====
+// -----
 // This demo uses no external libraries and highlights the
 // benefits of drawing/animating SVG graphics with css and JavaScript.
 //
 // Flow-based Programming (FBP)
-// ============================
+// ----------------------------
 //
 // This project was inspired by the
 // [clock app](http://noflojs.org/noflo-ui/#example/6699161)
@@ -39,7 +39,7 @@
 // - Conditional port: [<port>]
 //
 // Separation of Concerns (SOC)
-// ============================
+// ----------------------------
 //
 // Whenever possible, this demo strives to isolate data and logic to the
 // components and processes using them.  This helps make code modular,
@@ -48,7 +48,7 @@
 // demo for simplicity and clarity.
 //
 // Complexity and Maintainability
-// ==============================
+// ------------------------------
 //
 // Each module should be as complex as it needs to be, and no more.
 // Please compare this project to others using a tool like
@@ -113,26 +113,24 @@ var app = {
 // *splitProcess*
 //
 // - date "createDate" -> IN
-// - OUT -> integer "split/<segment>"
+// - OUT -> integer "split/&lt;segment&gt;"
 //
 (function splitProcess() {
 
-    function splitDateComponent(date) {
+    function splitDateComponent( date ) {
 
-        return function getTimeUnitsComponent(segment) {
-            var method = "get" + segment.charAt(0).toUpperCase() + segment.substring(1);
-            app.emit("split/" + segment, date[method]());
+        return function getTimeUnitsComponent( segment ) {
+            var method = "get" + segment.charAt(0).toUpperCase() + segment.substring( 1 );
+            app.emit( "split/" + segment, date[method]() );
         };
     }
 
     function splitComponent(date) {
 
-        //OUT integer
-        app.segments.forEach(splitDateComponent(date));
+        app.segments.forEach(splitDateComponent( date ));
     }
 
-    //IN date
-    app.on("createDate", splitComponent);
+    app.on( "createDate", splitComponent );
 }());
 
 // The rotationProcess converts seconds,
@@ -143,46 +141,44 @@ var app = {
 //
 // _depends on `timeComponent`_
 //
-// - integer "split<segment>" -> IN
-// - [OUT -> degrees "draw/<segment>"]
+// - integer "split&lt;segment&gt;" -> IN
+// - [OUT -> degrees "draw/&lt;segment&gt;"]
 //
-(function rotationProcess(timeComponent) {
+(function rotationProcess( timeComponent ) {
     var split = {};
 
-    function makeRotationSegmentComponent(segment) {
+    function makeRotationSegmentComponent( segment ) {
 
-        return function convertToDegreesComponent(number) {
-            if (split[segment] !== number) {
+        return function convertToDegreesComponent( number ) {
+            if ( split[segment] !== number ) {
                 split[segment] = number;
 
-                //OUT degrees
-                app.emit("draw/" + segment, timeComponent[segment].toDegrees(split));
+                app.emit( "draw/" + segment, timeComponent[segment].toDegrees( split ) );
             }
         };
     }
 
-    function makeRotationComponent(segment) {
+    function makeRotationComponent( segment ) {
 
-        //IN integer
-        app.on("split/" + segment, makeRotationSegmentComponent(segment));
+        app.on( "split/" + segment, makeRotationSegmentComponent( segment ) );
     }
 
-    app.segments.forEach(makeRotationComponent);
+    app.segments.forEach( makeRotationComponent );
 
 }({
     seconds: {
-        toDegrees: function (split) {
+        toDegrees: function ( split ) {
             return split.seconds * 6;
         }
     },
     minutes: {
-        toDegrees: function (split) {
-            return (split.minutes + (split.seconds / 60)) * 6;
+        toDegrees: function ( split ) {
+            return ( split.minutes + ( split.seconds / 60 )) * 6;
         }
     },
     hours: {
-        toDegrees: function (split) {
-            return (split.hours % 12 * 30) + split.minutes / 2;
+        toDegrees: function ( split ) {
+            return ( split.hours % 12 * 30 ) + split.minutes / 2;
         }
     }
 }));
@@ -196,91 +192,97 @@ var app = {
 // _depends on `SVG`_
 //
 // - element "create" -> IN
-// - degrees "draw<segment>" -> IN
+// - degrees "draw/&lt;segment&gt;" -> IN
 //
-(function drawProcess(SVG) {
+(function drawProcess( SVG ) {
 
-    function resetComponent(hand) {
-        hand.rotate(359.9);
-        return setTimeout(function () {
-            hand.rotate(0, false);
-        }, 816);
+    function resetComponent( hand ) {
+        hand.rotate( 359.9 );
+        return setTimeout( function () {
+            hand.rotate( 0, false );
+        }, 816 );
     }
 
-    function drawSegmentComponent(segment) {
+    function drawSegmentComponent( segment ) {
 
-        return function drawSegmentDegreesComponent(degrees) {
+        return function drawSegmentDegreesComponent( degrees ) {
             var hand = SVG[segment];
-            if (degrees === 0 && hand.rotated) {
-                return resetComponent(hand);
+            if ( degrees === 0 && hand.rotated ) {
+                return resetComponent( hand );
             }
-            if (!hand.rotated) {
+            if ( !hand.rotated ) {
                 hand.rotated = true;
-                return hand.rotate(degrees, false);
+                return hand.rotate( degrees, false );
             }
-            return hand.rotate(degrees);
+            return hand.rotate( degrees );
         };
     }
 
-    function drawComponent(segment) {
+    function drawComponent( segment ) {
 
-        //IN degrees
-        app.on("draw/" + segment, drawSegmentComponent(segment));
+        app.on( "draw/" + segment, drawSegmentComponent( segment ) );
     }
 
-    app.segments.forEach(drawComponent);
+    app.segments.forEach( drawComponent );
 
-    //IN element
-    app.on("create", SVG);
+    app.on( "create", SVG );
 
 }(function () {
-    function SVG(config) {
-        if (!(this instanceof SVG)) {
-            return new SVG(config);
+
+    // keep the interface fluent
+    function SVG( config ) {
+        if ( !( this instanceof SVG ) ) {
+            return new SVG( config );
         }
         this.config = config;
         this.create()
-            .set("class", this.config.class)
+            .set( "class", this.config.class )
             .setText()
             .setData()
             .register()
-            .appendTo(this.config.layer);
+            .appendTo( this.config.layer );
     }
 
-    SVG.layers = [document.getElementsByTagName("body")[0]];
+    // store layers as a class property
+    SVG.layers = [document.getElementsByTagName( "body" )[0]];
 
     SVG.prototype = {
         create: function () {
-            this.elm = document.createElementNS("http://www.w3.org/2000/svg", this.config.type);
+            this.elm = document.createElementNS( "http://www.w3.org/2000/svg", this.config.type );
             return this;
         },
-        set: function (prop, val) {
-            this.elm.setAttribute(prop, val);
+        set: function ( prop, val ) {
+            this.elm.setAttribute( prop, val );
             return this;
         },
-        getLayer: function (layerId) {
+        getLayer: function ( layerId ) {
             this.layer = SVG.layers[layerId];
-            if (!this.layer) {
+            if ( !this.layer ) {
                 SVG.layers[layerId] = this.elm;
                 this.layer = SVG.layers[layerId - 1];
             }
             return this;
         },
-        appendTo: function (layerId) {
-            this.getLayer(layerId);
-            this.layer.appendChild(this.elm);
+        appendTo: function ( layerId ) {
+            this.getLayer( layerId );
+            this.layer.appendChild( this.elm );
             return this;
         },
         setText: function () {
-            if (this.config.textContent) {
-                this.elm.appendChild(document.createTextNode(this.config.textContent));
+            if ( this.config.textContent ) {
+                this.elm.appendChild( document.createTextNode( this.config.textContent ) );
             }
             return this;
         },
+        getConfigData: function () {
+            return this.config.data || {};
+        },
         setData: function () {
             var prop;
-            for (prop in this.config.data || {}) {
-                this.set(prop, this.config.data[prop]);
+            for ( prop in  this.getConfigData() ) {
+                if ( this.config.data.hasOwnProperty( prop ) ) {
+                    this.set( prop, this.config.data[prop] );
+                }
             }
             return this;
         },
@@ -288,7 +290,7 @@ var app = {
             SVG[this.config.class] = this;
             return this;
         },
-        rotate: function (degrees, transition) {
+        rotate: function ( degrees, transition ) {
             var origin = "transform-origin: 100 100;",
                 transform = "transform:rotate("+ degrees + "deg);",
                 style = origin + transform +
@@ -296,10 +298,10 @@ var app = {
                     "-ms-" + transform +
                     "-webkit-" + origin +
                     "-webkit-" + transform;
-            if (transition === false) {
+            if ( transition === false ) {
                 style += "transition: none;";
             }
-            return this.set("style", style);
+            return this.set( "style", style );
         }
     };
 
@@ -315,20 +317,18 @@ var app = {
 // - null "init" -> IN
 // - OUT -> element "create"
 //
-(function initProcess(elementsComponent) {
+(function initProcess( elementsComponent ) {
 
-    function createElmComponent(element) {
+    function createElmComponent( element ) {
 
-        //OUT element
-        app.emit("create", element);
+        app.emit( "create", element );
     }
 
     function initComponent() {
         elementsComponent.forEach(createElmComponent);
     }
 
-    //IN null
-    app.on("init", initComponent);
+    app.on( "init", initComponent );
 }([
     {type: "svg",       layer: 1,   class: "container", data: {
         version: "1.2", baseProfile: "tiny", viewBox: "0 0 200 200", "enable-background": "0 0 200 200"}},
@@ -365,16 +365,14 @@ var app = {
 
     function createDateComponent() {
 
-        // OUT -> date
-        app.emit("createDate", new Date());
+        app.emit( "createDate", new Date() );
     }
 
     function animationFrameComponent(bool) {
-        intervalData = bool ? setInterval(createDateComponent, 1000) : clearInterval(intervalData);
+        intervalData = bool ? setInterval( createDateComponent, 1000 ) : clearInterval( intervalData );
     }
 
-    //IN bool
-    app.on("animate", animationFrameComponent);
+    app.on( "animate", animationFrameComponent );
 }());
 
 // The startProcess sends elements to be created then beings
@@ -390,17 +388,14 @@ var app = {
 
     function startComponent() {
 
-        //OUT
         app.emit("init");
 
-        //OUT bool
         app.emit("animate", true);
     }
 
-    //IN
     app.on("start", startComponent);
 }());
 
-// The "kick" `app.emit("start");` is intentionally
-// left out to prevent the clock from drawing in the test harness
-// the "stopProcess" is omitted as an exercise for the reader
+app.emit("start");
+
+// the obviously orthogonal "stopProcess" is omitted as an exercise for the reader

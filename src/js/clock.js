@@ -34,9 +34,9 @@
 //
 // I use this notation to denote ports:
 //
-// - IN port: <IP type> <channel> -> IN
-// - OUT port: OUT -> <IP type> <channel>
-// - Conditional port: [<port>]
+// - IN port: &lt;IP type&gt; &lt;channel&gt; -> IN
+// - OUT port: OUT -> &lt;IP type> &lt;channel&gt;
+// - Conditional port: [&lt;port&gt;]
 //
 // Separation of Concerns (SOC)
 // ----------------------------
@@ -83,26 +83,36 @@ var app = {
     // for other processes.
     app.on = topicsComponent.on;
     app.emit = topicsComponent.emit;
+
 }(function () {
 
     var cache = {};
 
     function getTopic( topic ) {
+
         return ( cache[topic] = cache[topic] || [] );
+
     }
 
     // we want to return data so reduce keeps applying it
     function emitData( data, callback ) {
+
         callback.call( null, data );
+
         return data;
+
     }
 
     return {
         on: function ( topic, callback ){
+
             getTopic( topic).push( callback );
+
         },
         emit: function ( topic, data ) {
+
             getTopic( topic ).reduce( emitData, data );
+
         }
     }
 }()));
@@ -120,14 +130,18 @@ var app = {
     function splitDateComponent( date ) {
 
         return function getTimeUnitsComponent( segment ) {
+
             var method = "get" + segment.charAt(0).toUpperCase() + segment.substring( 1 );
             app.emit( "split/" + segment, date[method]() );
+
         };
+
     }
 
     function splitComponent(date) {
 
         app.segments.forEach(splitDateComponent( date ));
+
     }
 
     app.on( "createDate", splitComponent );
@@ -150,17 +164,20 @@ var app = {
     function makeRotationSegmentComponent( segment ) {
 
         return function convertToDegreesComponent( number ) {
+
             if ( split[segment] !== number ) {
                 split[segment] = number;
 
                 app.emit( "draw/" + segment, timeComponent[segment].toDegrees( split ) );
             }
         };
+
     }
 
     function makeRotationComponent( segment ) {
 
         app.on( "split/" + segment, makeRotationSegmentComponent( segment ) );
+
     }
 
     app.segments.forEach( makeRotationComponent );
@@ -168,17 +185,23 @@ var app = {
 }({
     seconds: {
         toDegrees: function ( split ) {
+
             return split.seconds * 6;
+
         }
     },
     minutes: {
         toDegrees: function ( split ) {
+
             return ( split.minutes + ( split.seconds / 60 )) * 6;
+
         }
     },
     hours: {
         toDegrees: function ( split ) {
+
             return ( split.hours % 12 * 30 ) + split.minutes / 2;
+
         }
     }
 }));
@@ -197,24 +220,37 @@ var app = {
 (function drawProcess( SVG ) {
 
     function resetComponent( hand ) {
+
         hand.rotate( 359.9 );
+
         return setTimeout( function () {
+
             hand.rotate( 0, false );
+
         }, 816 );
+
     }
 
     function drawSegmentComponent( segment ) {
 
         return function drawSegmentDegreesComponent( degrees ) {
+
             var hand = SVG[segment];
+
             if ( degrees === 0 && hand.rotated ) {
+
                 return resetComponent( hand );
+
             }
             if ( !hand.rotated ) {
                 hand.rotated = true;
+
                 return hand.rotate( degrees, false );
+
             }
+
             return hand.rotate( degrees );
+
         };
     }
 
@@ -231,9 +267,11 @@ var app = {
 
     // keep the interface fluent
     function SVG( config ) {
+
         if ( !( this instanceof SVG ) ) {
             return new SVG( config );
         }
+
         this.config = config;
         this.create()
             .set( "class", this.config.class )
@@ -247,50 +285,76 @@ var app = {
     SVG.layers = [document.getElementsByTagName( "body" )[0]];
 
     SVG.prototype = {
+
         create: function () {
+
             this.elm = document.createElementNS( "http://www.w3.org/2000/svg", this.config.type );
+
             return this;
+
         },
         set: function ( prop, val ) {
+
             this.elm.setAttribute( prop, val );
+
             return this;
+
         },
         getLayer: function ( layerId ) {
+
             this.layer = SVG.layers[layerId];
+
             if ( !this.layer ) {
                 SVG.layers[layerId] = this.elm;
                 this.layer = SVG.layers[layerId - 1];
             }
+
             return this;
+
         },
         appendTo: function ( layerId ) {
+
             this.getLayer( layerId );
             this.layer.appendChild( this.elm );
+
             return this;
+
         },
         setText: function () {
+
             if ( this.config.textContent ) {
                 this.elm.appendChild( document.createTextNode( this.config.textContent ) );
             }
+
             return this;
+
         },
         getConfigData: function () {
+
             return this.config.data || {};
+
         },
         setData: function () {
+
             var prop;
+
             for ( prop in  this.getConfigData() ) {
                 if ( this.config.data.hasOwnProperty( prop ) ) {
                     this.set( prop, this.config.data[prop] );
                 }
             }
+
             return this;
+
         },
         register: function () {
+
             SVG[this.config.class] = this;
             return this;
+
         },
         rotate: function ( degrees, transition ) {
+
             var origin = "transform-origin: 100 100;",
                 transform = "transform:rotate("+ degrees + "deg);",
                 style = origin + transform +
@@ -298,14 +362,18 @@ var app = {
                     "-ms-" + transform +
                     "-webkit-" + origin +
                     "-webkit-" + transform;
+
             if ( transition === false ) {
                 style += "transition: none;";
             }
+
             return this.set( "style", style );
+
         }
     };
 
     return SVG;
+
 }()));
 
 // The initProcess sends elements to be created.
@@ -329,6 +397,7 @@ var app = {
     }
 
     app.on( "init", initComponent );
+
 }([
     {type: "svg",       layer: 1,   class: "container", data: {
         version: "1.2", baseProfile: "tiny", viewBox: "0 0 200 200", "enable-background": "0 0 200 200"}},
@@ -361,6 +430,7 @@ var app = {
 // - OUT -> date "createDate"
 //
 (function animationFrameProcess() {
+
     var intervalData;
 
     function createDateComponent() {
@@ -373,6 +443,7 @@ var app = {
     }
 
     app.on( "animate", animationFrameComponent );
+
 }());
 
 // The startProcess sends elements to be created then beings
@@ -394,6 +465,7 @@ var app = {
     }
 
     app.on("start", startComponent);
+
 }());
 
 app.emit("start");

@@ -92,9 +92,9 @@ their <em>DATA</em>, and <em>IN</em>/<em>OUT</em> port(s)</li>
 </ul>
 <p>I use this notation to denote ports:</p>
 <ul>
-<li>IN port: <IP type> <channel> -&gt; IN</li>
-<li>OUT port: OUT -&gt; <IP type> <channel></li>
-<li>Conditional port: [<port>]</li>
+<li>IN port: &lt;IP type&gt; &lt;channel&gt; -&gt; IN</li>
+<li>OUT port: OUT -&gt; &lt;IP type&gt; &lt;channel&gt;</li>
+<li>Conditional port: [&lt;port&gt;]</li>
 </ul>
 <h2>Separation of Concerns (SOC)</h2>
 
@@ -182,12 +182,15 @@ for other processes.</p>
             
             <div class="content"><div class='highlight'><pre>    app.on = topicsComponent.on;
     app.emit = topicsComponent.emit;
+
 }(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
     <span class="keyword">var</span> cache = {};
 
     <span class="function"><span class="keyword">function</span> <span class="title">getTopic</span><span class="params">( topic )</span> {</span>
+
         <span class="keyword">return</span> ( cache[topic] = cache[topic] || [] );
+
     }</pre></div></div>
             
         </li>
@@ -204,16 +207,23 @@ for other processes.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">emitData</span><span class="params">( data, callback )</span> {</span>
+
         callback.call( <span class="literal">null</span>, data );
+
         <span class="keyword">return</span> data;
+
     }
 
     <span class="keyword">return</span> {
         on: <span class="function"><span class="keyword">function</span> <span class="params">( topic, callback )</span>{</span>
+
             getTopic( topic).push( callback );
+
         },
         emit: <span class="function"><span class="keyword">function</span> <span class="params">( topic, data )</span> {</span>
+
             getTopic( topic ).reduce( emitData, data );
+
         }
     }
 }()));</pre></div></div>
@@ -242,14 +252,18 @@ for calculating rotation.</p>
     <span class="function"><span class="keyword">function</span> <span class="title">splitDateComponent</span><span class="params">( date )</span> {</span>
 
         <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">getTimeUnitsComponent</span><span class="params">( segment )</span> {</span>
+
             <span class="keyword">var</span> method = <span class="string">"get"</span> + segment.charAt(<span class="number">0</span>).toUpperCase() + segment.substring( <span class="number">1</span> );
             app.emit( <span class="string">"split/"</span> + segment, date[method]() );
+
         };
+
     }
 
     <span class="function"><span class="keyword">function</span> <span class="title">splitComponent</span><span class="params">(date)</span> {</span>
 
         app.segments.forEach(splitDateComponent( date ));
+
     }
 
     app.on( <span class="string">"createDate"</span>, splitComponent );
@@ -281,17 +295,20 @@ minutes, and hours into degrees for drawing.</p>
     <span class="function"><span class="keyword">function</span> <span class="title">makeRotationSegmentComponent</span><span class="params">( segment )</span> {</span>
 
         <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">convertToDegreesComponent</span><span class="params">( number )</span> {</span>
+
             <span class="keyword">if</span> ( split[segment] !== number ) {
                 split[segment] = number;
 
                 app.emit( <span class="string">"draw/"</span> + segment, timeComponent[segment].toDegrees( split ) );
             }
         };
+
     }
 
     <span class="function"><span class="keyword">function</span> <span class="title">makeRotationComponent</span><span class="params">( segment )</span> {</span>
 
         app.on( <span class="string">"split/"</span> + segment, makeRotationSegmentComponent( segment ) );
+
     }
 
     app.segments.forEach( makeRotationComponent );
@@ -299,17 +316,23 @@ minutes, and hours into degrees for drawing.</p>
 }({
     seconds: {
         toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">( split )</span> {</span>
+
             <span class="keyword">return</span> split.seconds * <span class="number">6</span>;
+
         }
     },
     minutes: {
         toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">( split )</span> {</span>
+
             <span class="keyword">return</span> ( split.minutes + ( split.seconds / <span class="number">60</span> )) * <span class="number">6</span>;
+
         }
     },
     hours: {
         toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">( split )</span> {</span>
+
             <span class="keyword">return</span> ( split.hours % <span class="number">12</span> * <span class="number">30</span> ) + split.minutes / <span class="number">2</span>;
+
         }
     }
 }));</pre></div></div>
@@ -338,24 +361,37 @@ on draw the element is pulled from the cache and rotated.</p>
             <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">drawProcess</span><span class="params">( SVG )</span> {</span>
 
     <span class="function"><span class="keyword">function</span> <span class="title">resetComponent</span><span class="params">( hand )</span> {</span>
+
         hand.rotate( <span class="number">359.9</span> );
+
         <span class="keyword">return</span> setTimeout( <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
             hand.rotate( <span class="number">0</span>, <span class="literal">false</span> );
+
         }, <span class="number">816</span> );
+
     }
 
     <span class="function"><span class="keyword">function</span> <span class="title">drawSegmentComponent</span><span class="params">( segment )</span> {</span>
 
         <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">drawSegmentDegreesComponent</span><span class="params">( degrees )</span> {</span>
+
             <span class="keyword">var</span> hand = SVG[segment];
+
             <span class="keyword">if</span> ( degrees === <span class="number">0</span> &amp;&amp; hand.rotated ) {
+
                 <span class="keyword">return</span> resetComponent( hand );
+
             }
             <span class="keyword">if</span> ( !hand.rotated ) {
                 hand.rotated = <span class="literal">true</span>;
+
                 <span class="keyword">return</span> hand.rotate( degrees, <span class="literal">false</span> );
+
             }
+
             <span class="keyword">return</span> hand.rotate( degrees );
+
         };
     }
 
@@ -384,9 +420,11 @@ on draw the element is pulled from the cache and rotated.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">SVG</span><span class="params">( config )</span> {</span>
+
         <span class="keyword">if</span> ( !( <span class="keyword">this</span> <span class="keyword">instanceof</span> SVG ) ) {
             <span class="keyword">return</span> <span class="keyword">new</span> SVG( config );
         }
+
         <span class="keyword">this</span>.config = config;
         <span class="keyword">this</span>.create()
             .set( <span class="string">"class"</span>, <span class="keyword">this</span>.config.class )
@@ -412,50 +450,76 @@ on draw the element is pulled from the cache and rotated.</p>
             <div class="content"><div class='highlight'><pre>    SVG.layers = [document.getElementsByTagName( <span class="string">"body"</span> )[<span class="number">0</span>]];
 
     SVG.prototype = {
+
         create: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
             <span class="keyword">this</span>.elm = document.createElementNS( <span class="string">"http://www.w3.org/2000/svg"</span>, <span class="keyword">this</span>.config.type );
+
             <span class="keyword">return</span> <span class="keyword">this</span>;
+
         },
         set: <span class="function"><span class="keyword">function</span> <span class="params">( prop, val )</span> {</span>
+
             <span class="keyword">this</span>.elm.setAttribute( prop, val );
+
             <span class="keyword">return</span> <span class="keyword">this</span>;
+
         },
         getLayer: <span class="function"><span class="keyword">function</span> <span class="params">( layerId )</span> {</span>
+
             <span class="keyword">this</span>.layer = SVG.layers[layerId];
+
             <span class="keyword">if</span> ( !<span class="keyword">this</span>.layer ) {
                 SVG.layers[layerId] = <span class="keyword">this</span>.elm;
                 <span class="keyword">this</span>.layer = SVG.layers[layerId - <span class="number">1</span>];
             }
+
             <span class="keyword">return</span> <span class="keyword">this</span>;
+
         },
         appendTo: <span class="function"><span class="keyword">function</span> <span class="params">( layerId )</span> {</span>
+
             <span class="keyword">this</span>.getLayer( layerId );
             <span class="keyword">this</span>.layer.appendChild( <span class="keyword">this</span>.elm );
+
             <span class="keyword">return</span> <span class="keyword">this</span>;
+
         },
         setText: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
             <span class="keyword">if</span> ( <span class="keyword">this</span>.config.textContent ) {
                 <span class="keyword">this</span>.elm.appendChild( document.createTextNode( <span class="keyword">this</span>.config.textContent ) );
             }
+
             <span class="keyword">return</span> <span class="keyword">this</span>;
+
         },
         getConfigData: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
             <span class="keyword">return</span> <span class="keyword">this</span>.config.data || {};
+
         },
         setData: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
             <span class="keyword">var</span> prop;
+
             <span class="keyword">for</span> ( prop <span class="keyword">in</span>  <span class="keyword">this</span>.getConfigData() ) {
                 <span class="keyword">if</span> ( <span class="keyword">this</span>.config.data.hasOwnProperty( prop ) ) {
                     <span class="keyword">this</span>.set( prop, <span class="keyword">this</span>.config.data[prop] );
                 }
             }
+
             <span class="keyword">return</span> <span class="keyword">this</span>;
+
         },
         register: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
             SVG[<span class="keyword">this</span>.config.class] = <span class="keyword">this</span>;
             <span class="keyword">return</span> <span class="keyword">this</span>;
+
         },
         rotate: <span class="function"><span class="keyword">function</span> <span class="params">( degrees, transition )</span> {</span>
+
             <span class="keyword">var</span> origin = <span class="string">"transform-origin: 100 100;"</span>,
                 transform = <span class="string">"transform:rotate("</span>+ degrees + <span class="string">"deg);"</span>,
                 style = origin + transform +
@@ -463,14 +527,18 @@ on draw the element is pulled from the cache and rotated.</p>
                     <span class="string">"-ms-"</span> + transform +
                     <span class="string">"-webkit-"</span> + origin +
                     <span class="string">"-webkit-"</span> + transform;
+
             <span class="keyword">if</span> ( transition === <span class="literal">false</span> ) {
                 style += <span class="string">"transition: none;"</span>;
             }
+
             <span class="keyword">return</span> <span class="keyword">this</span>.set( <span class="string">"style"</span>, style );
+
         }
     };
 
     <span class="keyword">return</span> SVG;
+
 }()));</pre></div></div>
             
         </li>
@@ -504,6 +572,7 @@ on draw the element is pulled from the cache and rotated.</p>
     }
 
     app.on( <span class="string">"init"</span>, initComponent );
+
 }([
     {type: <span class="string">"svg"</span>,       layer: <span class="number">1</span>,   class: <span class="string">"container"</span>, data: {
         version: <span class="string">"1.2"</span>, baseProfile: <span class="string">"tiny"</span>, viewBox: <span class="string">"0 0 200 200"</span>, <span class="string">"enable-background"</span>: <span class="string">"0 0 200 200"</span>}},
@@ -547,6 +616,7 @@ we animate the clock.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">animationFrameProcess</span><span class="params">()</span> {</span>
+
     <span class="keyword">var</span> intervalData;
 
     <span class="function"><span class="keyword">function</span> <span class="title">createDateComponent</span><span class="params">()</span> {</span>
@@ -559,6 +629,7 @@ we animate the clock.</p>
     }
 
     app.on( <span class="string">"animate"</span>, animationFrameComponent );
+
 }());</pre></div></div>
             
         </li>
@@ -591,6 +662,7 @@ the animationFrameProcess</p>
     }
 
     app.on(<span class="string">"start"</span>, startComponent);
+
 }());
 
 app.emit(<span class="string">"start"</span>);</pre></div></div>

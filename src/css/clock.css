@@ -1,7 +1,13 @@
 .clock {
-    fill: white;
+    fill: whitesmoke;
     stroke: black;
     stroke-width: 1;
+}
+
+.pin {
+    fill: silver;
+    stroke: slategray;
+    stroke-width: 0.2;
 }
 
 .seconds {

@@ -334,12 +334,6 @@ var app = {
         version: "1.2", baseProfile: "tiny", viewBox: "0 0 200 200", "enable-background": "0 0 200 200"}},
     {type: "circle",    layer: 2,   class: "clock",     data: {
         cx: 100, cy: 100, r: 90}},
-    {type: "line",      layer: 1,   class: "hours",     data: {
-        x1: 100, y1: 45, x2: 100, y2: 100}},
-    {type: "line",      layer: 1,   class: "minutes",   data: {
-        x1: 100, y1: 25, x2: 100, y2: 100}},
-    {type: "line",      layer: 1,   class: "seconds",   data: {
-        x1: 100, y1: 15, x2: 100, y2: 100}},
     {type: "text",      layer: 1,   class: "text",      textContent: "12",  data: {
         x: 92, y: 30}},
     {type: "text",      layer: 1,   class: "text",      textContent: "3",   data: {
@@ -347,7 +341,15 @@ var app = {
     {type: "text",      layer: 1,   class: "text",      textContent: "6",   data: {
         x: 96, y: 180}},
     {type: "text",      layer: 1,   class: "text",      textContent: "9",   data: {
-        x: 18, y: 106}}
+        x: 18, y: 106}},
+    {type: "line",      layer: 1,   class: "hours",     data: {
+        x1: 100, y1: 45, x2: 100, y2: 100}},
+    {type: "line",      layer: 1,   class: "minutes",   data: {
+        x1: 100, y1: 25, x2: 100, y2: 100}},
+    {type: "line",      layer: 1,   class: "seconds",   data: {
+        x1: 100, y1: 15, x2: 100, y2: 100}},
+    {type: "circle",    layer: 1,   class: "pin",     data: {
+        cx: 100, cy: 100, r: 2}}
 ]));
 
 // The animationFrameProcess controls how often

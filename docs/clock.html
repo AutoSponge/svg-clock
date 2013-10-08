@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>SVG Clock</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>SVG Clock</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This SVG clock demo was build to highlight the following;</p>
+<ul>
+<li>Modern web techniques (HTML5)</li>
+<li>Flow-based Programming (FBP) (as a design pattern)</li>
+<li>Separation of concerns (SOC)</li>
+<li>Design impacts on complexity and maintainability</li>
+</ul>
+<h1>HTML5</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>This demo uses no external libraries and highlights the
+benefits of drawing/animating SVG graphics with css and JavaScript.</p>
+<h1>Flow-based Programming (FBP)</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>This project was inspired by the
+<a href="http://noflojs.org/noflo-ui/#example/6699161">clock app</a>
+design from <a href="http://noflojs.org/">NoFlo</a>. This is not an attempt at
+building an FBP engine, merely an exercise at following the design
+principles used in FBP.</p>
+<p>The major principles used here include:</p>
+<ul>
+<li>Information Packets (IPs) - this is the data parameter passed to <code>app.emit</code></li>
+<li>Processes - discrete functions encapsulating component(s),
+their <em>DATA</em>, and <em>IN</em>/<em>OUT</em> port(s)</li>
+<li>Components - functions used within a process</li>
+<li>Data - variables shared by components</li>
+<li>IN port - a channel used to send IP to a process</li>
+<li>OUT port - a channel used to send IP from a process</li>
+</ul>
+<p>I use this notation to denote ports:</p>
+<ul>
+<li>IN port: <IP type> <channel> -&gt; IN</li>
+<li>OUT port: OUT -&gt; <IP type> <channel></li>
+<li>Conditional port: [<port>]</li>
+</ul>
+<h1>Separation of Concerns (SOC)</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Whenever possible, this demo strives to isolate data and logic to the
+components and processes using them.  This helps make code modular,
+reusable, and testable.  Further steps can be taken to separate the
+modules into discrete files but I left everything in tact in this
+demo for simplicity and clarity.</p>
+<h1>Complexity and Maintainability</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Each module should be as complex as it needs to be, and no more.
+Please compare this project to others using a tool like
+<a href="http://jscomplexity.org/">JSComplexity</a> or
+<a href="https://github.com/jsoverson/plato">Plato</a>.
+I hope to demonstrate that the techniques above lend to a
+more maintainable code base.</p>
+<p>We only have one global, <code>app</code>.
+<code>app</code> holds <code>segments</code> data, which several processes need.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> app = {
+    segments: [
+        <span class="string">"seconds"</span>,
+        <span class="string">"minutes"</span>,
+        <span class="string">"hours"</span>
+    ]
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>The mediatorProcess installs topicsComponent methods
+to app on instantiation.</p>
+<p><em>mediatorProcess</em></p>
+<p><em>depends on <code>topicsComponent</code></em></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">mediatorProcess</span><span class="params">(topicsComponent)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>We export the <code>on</code> and <code>emit</code> capabilities.
+Both are technically IN ports and provide the
+communication channels used to create IN/OUT ports
+for other processes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    app.on = topicsComponent.on;
+    app.emit = topicsComponent.emit;
+}(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+    <span class="keyword">var</span> cache = {};
+
+    <span class="function"><span class="keyword">function</span> <span class="title">getTopic</span><span class="params">( topic )</span> {</span>
+        <span class="keyword">return</span> ( cache[topic] = cache[topic] || [] );
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>we want to return data so reduce keeps applying it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">emitData</span><span class="params">( data, callback )</span> {</span>
+        callback.call( <span class="literal">null</span>, data );
+        <span class="keyword">return</span> data;
+    }
+
+    <span class="keyword">return</span> {
+        on: <span class="function"><span class="keyword">function</span> <span class="params">( topic, callback )</span>{</span>
+            getTopic( topic).push( callback );
+        },
+        emit: <span class="function"><span class="keyword">function</span> <span class="params">( topic, data )</span> {</span>
+            getTopic( topic ).reduce( emitData, data );
+        }
+    }
+}()));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>The splitProcess transforms dates
+for calculating rotation.</p>
+<p><em>splitProcess</em></p>
+<ul>
+<li>date &quot;createDate&quot; -&gt; IN</li>
+<li>OUT -&gt; integer &quot;split/<segment>&quot;</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">splitProcess</span><span class="params">()</span> {</span>
+
+    <span class="function"><span class="keyword">function</span> <span class="title">splitDateComponent</span><span class="params">(date)</span> {</span>
+
+        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">getTimeUnitsComponent</span><span class="params">(segment)</span> {</span>
+            <span class="keyword">var</span> method = <span class="string">"get"</span> + segment.charAt(<span class="number">0</span>).toUpperCase() + segment.substring(<span class="number">1</span>);
+            app.emit(<span class="string">"split/"</span> + segment, date[method]());
+        };
+    }
+
+    <span class="function"><span class="keyword">function</span> <span class="title">splitComponent</span><span class="params">(date)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>OUT integer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        app.segments.forEach(splitDateComponent(date));
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>IN date</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    app.on(<span class="string">"createDate"</span>, splitComponent);
+}());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>The rotationProcess converts seconds,
+minutes, and hours into degrees for drawing.</p>
+<p><em>rotationProcess</em></p>
+<p><em>depends on <code>timeComponent</code></em></p>
+<ul>
+<li>integer &quot;split<segment>&quot; -&gt; IN</li>
+<li>[OUT -&gt; degrees &quot;draw/<segment>&quot;]</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">rotationProcess</span><span class="params">(timeComponent)</span> {</span>
+    <span class="keyword">var</span> split = {};
+
+    <span class="function"><span class="keyword">function</span> <span class="title">makeRotationSegmentComponent</span><span class="params">(segment)</span> {</span>
+
+        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">convertToDegreesComponent</span><span class="params">(number)</span> {</span>
+            <span class="keyword">if</span> (split[segment] !== number) {
+                split[segment] = number;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>OUT degrees</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                app.emit(<span class="string">"draw/"</span> + segment, timeComponent[segment].toDegrees(split));
+            }
+        };
+    }
+
+    <span class="function"><span class="keyword">function</span> <span class="title">makeRotationComponent</span><span class="params">(segment)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>IN integer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        app.on(<span class="string">"split/"</span> + segment, makeRotationSegmentComponent(segment));
+    }
+
+    app.segments.forEach(makeRotationComponent);
+
+}({
+    seconds: {
+        toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">(split)</span> {</span>
+            <span class="keyword">return</span> split.seconds * <span class="number">6</span>;
+        }
+    },
+    minutes: {
+        toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">(split)</span> {</span>
+            <span class="keyword">return</span> (split.minutes + (split.seconds / <span class="number">60</span>)) * <span class="number">6</span>;
+        }
+    },
+    hours: {
+        toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">(split)</span> {</span>
+            <span class="keyword">return</span> (split.hours % <span class="number">12</span> * <span class="number">30</span>) + split.minutes / <span class="number">2</span>;
+        }
+    }
+}));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>The drawProcess draws objects on the DOM
+on create, drawProcess passes element to SVG and caches the SVG element
+on draw the element is pulled from the cache and rotated.</p>
+<p><em>drawProcess</em></p>
+<p><em>depends on <code>SVG</code></em></p>
+<ul>
+<li>element &quot;create&quot; -&gt; IN</li>
+<li>degrees &quot;draw<segment>&quot; -&gt; IN</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">drawProcess</span><span class="params">(SVG)</span> {</span>
+
+    <span class="function"><span class="keyword">function</span> <span class="title">resetComponent</span><span class="params">(hand)</span> {</span>
+        hand.rotate(<span class="number">359.9</span>);
+        <span class="keyword">return</span> setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            hand.rotate(<span class="number">0</span>, <span class="literal">false</span>);
+        }, <span class="number">816</span>);
+    }
+
+    <span class="function"><span class="keyword">function</span> <span class="title">drawSegmentComponent</span><span class="params">(segment)</span> {</span>
+
+        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">drawSegmentDegreesComponent</span><span class="params">(degrees)</span> {</span>
+            <span class="keyword">var</span> hand = SVG[segment];
+            <span class="keyword">if</span> (degrees === <span class="number">0</span> &amp;&amp; hand.rotated) {
+                <span class="keyword">return</span> resetComponent(hand);
+            }
+            <span class="keyword">if</span> (!hand.rotated) {
+                hand.rotated = <span class="literal">true</span>;
+                <span class="keyword">return</span> hand.rotate(degrees, <span class="literal">false</span>);
+            }
+            <span class="keyword">return</span> hand.rotate(degrees);
+        };
+    }
+
+    <span class="function"><span class="keyword">function</span> <span class="title">drawComponent</span><span class="params">(segment)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>IN degrees</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        app.on(<span class="string">"draw/"</span> + segment, drawSegmentComponent(segment));
+    }
+
+    app.segments.forEach(drawComponent);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>IN element</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    app.on(<span class="string">"create"</span>, SVG);
+
+}(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">SVG</span><span class="params">(config)</span> {</span>
+        <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> SVG)) {
+            <span class="keyword">return</span> <span class="keyword">new</span> SVG(config);
+        }
+        <span class="keyword">this</span>.config = config;
+        <span class="keyword">this</span>.create()
+            .set(<span class="string">"class"</span>, <span class="keyword">this</span>.config.class)
+            .setText()
+            .setData()
+            .register()
+            .appendTo(<span class="keyword">this</span>.config.layer);
+    }
+
+    SVG.layers = [document.getElementsByTagName(<span class="string">"body"</span>)[<span class="number">0</span>]];
+
+    SVG.prototype = {
+        create: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <span class="keyword">this</span>.elm = document.createElementNS(<span class="string">"http://www.w3.org/2000/svg"</span>, <span class="keyword">this</span>.config.type);
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        set: <span class="function"><span class="keyword">function</span> <span class="params">(prop, val)</span> {</span>
+            <span class="keyword">this</span>.elm.setAttribute(prop, val);
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        getLayer: <span class="function"><span class="keyword">function</span> <span class="params">(layerId)</span> {</span>
+            <span class="keyword">this</span>.layer = SVG.layers[layerId];
+            <span class="keyword">if</span> (!<span class="keyword">this</span>.layer) {
+                SVG.layers[layerId] = <span class="keyword">this</span>.elm;
+                <span class="keyword">this</span>.layer = SVG.layers[layerId - <span class="number">1</span>];
+            }
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        appendTo: <span class="function"><span class="keyword">function</span> <span class="params">(layerId)</span> {</span>
+            <span class="keyword">this</span>.getLayer(layerId);
+            <span class="keyword">this</span>.layer.appendChild(<span class="keyword">this</span>.elm);
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        setText: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <span class="keyword">if</span> (<span class="keyword">this</span>.config.textContent) {
+                <span class="keyword">this</span>.elm.appendChild(document.createTextNode(<span class="keyword">this</span>.config.textContent));
+            }
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        setData: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <span class="keyword">var</span> prop;
+            <span class="keyword">for</span> (prop <span class="keyword">in</span> <span class="keyword">this</span>.config.data || {}) {
+                <span class="keyword">this</span>.set(prop, <span class="keyword">this</span>.config.data[prop]);
+            }
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        register: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            SVG[<span class="keyword">this</span>.config.class] = <span class="keyword">this</span>;
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        rotate: <span class="function"><span class="keyword">function</span> <span class="params">(degrees, transition)</span> {</span>
+            <span class="keyword">var</span> origin = <span class="string">"transform-origin: 100 100;"</span>,
+                transform = <span class="string">"transform:rotate("</span>+ degrees + <span class="string">"deg);"</span>,
+                style = origin + transform +
+                    <span class="string">"-ms-"</span> + origin +
+                    <span class="string">"-ms-"</span> + transform +
+                    <span class="string">"-webkit-"</span> + origin +
+                    <span class="string">"-webkit-"</span> + transform;
+            <span class="keyword">if</span> (transition === <span class="literal">false</span>) {
+                style += <span class="string">"transition: none;"</span>;
+            }
+            <span class="keyword">return</span> <span class="keyword">this</span>.set(<span class="string">"style"</span>, style);
+        }
+    };
+
+    <span class="keyword">return</span> SVG;
+}()));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>The initProcess sends elements to be created.</p>
+<p><em>initProcess</em></p>
+<p><em>depends on <code>elementsComponent</code></em></p>
+<ul>
+<li>null &quot;init&quot; -&gt; IN</li>
+<li>OUT -&gt; element &quot;create&quot;</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">initProcess</span><span class="params">(elementsComponent)</span> {</span>
+
+    <span class="function"><span class="keyword">function</span> <span class="title">createElmComponent</span><span class="params">(element)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>OUT element</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        app.emit(<span class="string">"create"</span>, element);
+    }
+
+    <span class="function"><span class="keyword">function</span> <span class="title">initComponent</span><span class="params">()</span> {</span>
+        elementsComponent.forEach(createElmComponent);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>IN null</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    app.on(<span class="string">"init"</span>, initComponent);
+}([
+    {type: <span class="string">"svg"</span>,       layer: <span class="number">1</span>,   class: <span class="string">"container"</span>, data: {
+        version: <span class="string">"1.2"</span>, baseProfile: <span class="string">"tiny"</span>, viewBox: <span class="string">"0 0 200 200"</span>, <span class="string">"enable-background"</span>: <span class="string">"0 0 200 200"</span>}},
+    {type: <span class="string">"circle"</span>,    layer: <span class="number">2</span>,   class: <span class="string">"clock"</span>,     data: {
+        cx: <span class="number">100</span>, cy: <span class="number">100</span>, r: <span class="number">90</span>}},
+    {type: <span class="string">"line"</span>,      layer: <span class="number">1</span>,   class: <span class="string">"hours"</span>,     data: {
+        x1: <span class="number">100</span>, y1: <span class="number">45</span>, x2: <span class="number">100</span>, y2: <span class="number">100</span>}},
+    {type: <span class="string">"line"</span>,      layer: <span class="number">1</span>,   class: <span class="string">"minutes"</span>,   data: {
+        x1: <span class="number">100</span>, y1: <span class="number">25</span>, x2: <span class="number">100</span>, y2: <span class="number">100</span>}},
+    {type: <span class="string">"line"</span>,      layer: <span class="number">1</span>,   class: <span class="string">"seconds"</span>,   data: {
+        x1: <span class="number">100</span>, y1: <span class="number">15</span>, x2: <span class="number">100</span>, y2: <span class="number">100</span>}},
+    {type: <span class="string">"text"</span>,      layer: <span class="number">1</span>,   class: <span class="string">"text"</span>,      textContent: <span class="string">"12"</span>,  data: {
+        x: <span class="number">92</span>, y: <span class="number">30</span>}},
+    {type: <span class="string">"text"</span>,      layer: <span class="number">1</span>,   class: <span class="string">"text"</span>,      textContent: <span class="string">"3"</span>,   data: {
+        x: <span class="number">175</span>, y: <span class="number">106</span>}},
+    {type: <span class="string">"text"</span>,      layer: <span class="number">1</span>,   class: <span class="string">"text"</span>,      textContent: <span class="string">"6"</span>,   data: {
+        x: <span class="number">96</span>, y: <span class="number">180</span>}},
+    {type: <span class="string">"text"</span>,      layer: <span class="number">1</span>,   class: <span class="string">"text"</span>,      textContent: <span class="string">"9"</span>,   data: {
+        x: <span class="number">18</span>, y: <span class="number">106</span>}}
+]));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>The animationFrameProcess controls how often
+we animate the clock.</p>
+<p><em>animationFrameProcess</em></p>
+<ul>
+<li>boolean &quot;animate&quot; -&gt; IN</li>
+<li>OUT -&gt; date &quot;createDate&quot;</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">animationFrameProcess</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> intervalData;
+
+    <span class="function"><span class="keyword">function</span> <span class="title">createDateComponent</span><span class="params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>OUT -&gt; date</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        app.emit(<span class="string">"createDate"</span>, <span class="keyword">new</span> Date());
+    }
+
+    <span class="function"><span class="keyword">function</span> <span class="title">animationFrameComponent</span><span class="params">(bool)</span> {</span>
+        intervalData = bool ? setInterval(createDateComponent, <span class="number">1000</span>) : clearInterval(intervalData);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>IN bool</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    app.on(<span class="string">"animate"</span>, animationFrameComponent);
+}());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>The startProcess sends elements to be created then beings
+the animationFrameProcess</p>
+<p><em>startProcess</em></p>
+<ul>
+<li>null &quot;start&quot; -&gt; IN</li>
+<li>OUT -&gt; null &quot;init&quot;</li>
+<li>OUT -&gt; bool &quot;animate&quot;</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">startProcess</span><span class="params">()</span> {</span>
+
+    <span class="function"><span class="keyword">function</span> <span class="title">startComponent</span><span class="params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>OUT</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        app.emit(<span class="string">"init"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>OUT bool</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        app.emit(<span class="string">"animate"</span>, <span class="literal">true</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>IN</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    app.on(<span class="string">"start"</span>, startComponent);
+}());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>The &quot;kick&quot; <code>app.emit(&quot;start&quot;);</code> is intentionally
+left out to prevent the clock from drawing in the test harness
+the &quot;stopProcess&quot; is omitted as an exercise for the reader</p>
+
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

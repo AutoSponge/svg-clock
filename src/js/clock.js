@@ -5,7 +5,7 @@
 //
 // - Modern web techniques (HTML5)
 // - Flow-based Programming (FBP) (as a design pattern)
-// - Separation of concerns (SOC)
+// - Separation of concerns (SoC)
 // - Design impacts on complexity and maintainability
 //
 // HTML5

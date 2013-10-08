@@ -162,7 +162,7 @@ to app on instantiation.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">mediatorProcess</span><span class="params">(topicsComponent)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">mediatorProcess</span><span class="params">( topicsComponent )</span> {</span></pre></div></div>
             
         </li>
         
@@ -181,6 +181,7 @@ for other processes.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    app.on = topicsComponent.on;
+
     app.emit = topicsComponent.emit;
 
 }(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
@@ -215,6 +216,7 @@ for other processes.</p>
     }
 
     <span class="keyword">return</span> {
+
         on: <span class="function"><span class="keyword">function</span> <span class="params">( topic, callback )</span>{</span>
 
             getTopic( topic).push( callback );
@@ -225,7 +227,8 @@ for other processes.</p>
             getTopic( topic ).reduce( emitData, data );
 
         }
-    }
+
+    };
 }()));</pre></div></div>
             
         </li>
@@ -254,6 +257,7 @@ for calculating rotation.</p>
         <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">getTimeUnitsComponent</span><span class="params">( segment )</span> {</span>
 
             <span class="keyword">var</span> method = <span class="string">"get"</span> + segment.charAt(<span class="number">0</span>).toUpperCase() + segment.substring( <span class="number">1</span> );
+
             app.emit( <span class="string">"split/"</span> + segment, date[method]() );
 
         };
@@ -290,6 +294,7 @@ minutes, and hours into degrees for drawing.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="title">rotationProcess</span><span class="params">( timeComponent )</span> {</span>
+
     <span class="keyword">var</span> split = {};
 
     <span class="function"><span class="keyword">function</span> <span class="title">makeRotationSegmentComponent</span><span class="params">( segment )</span> {</span>
@@ -297,9 +302,11 @@ minutes, and hours into degrees for drawing.</p>
         <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">convertToDegreesComponent</span><span class="params">( number )</span> {</span>
 
             <span class="keyword">if</span> ( split[segment] !== number ) {
+
                 split[segment] = number;
 
                 app.emit( <span class="string">"draw/"</span> + segment, timeComponent[segment].toDegrees( split ) );
+
             }
         };
 
@@ -315,6 +322,7 @@ minutes, and hours into degrees for drawing.</p>
 
 }({
     seconds: {
+
         toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">( split )</span> {</span>
 
             <span class="keyword">return</span> split.seconds * <span class="number">6</span>;
@@ -322,6 +330,7 @@ minutes, and hours into degrees for drawing.</p>
         }
     },
     minutes: {
+
         toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">( split )</span> {</span>
 
             <span class="keyword">return</span> ( split.minutes + ( split.seconds / <span class="number">60</span> )) * <span class="number">6</span>;
@@ -329,6 +338,7 @@ minutes, and hours into degrees for drawing.</p>
         }
     },
     hours: {
+
         toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">( split )</span> {</span>
 
             <span class="keyword">return</span> ( split.hours % <span class="number">12</span> * <span class="number">30</span> ) + split.minutes / <span class="number">2</span>;
@@ -384,6 +394,7 @@ on draw the element is pulled from the cache and rotated.</p>
 
             }
             <span class="keyword">if</span> ( !hand.rotated ) {
+
                 hand.rotated = <span class="literal">true</span>;
 
                 <span class="keyword">return</span> hand.rotate( degrees, <span class="literal">false</span> );
@@ -422,10 +433,13 @@ on draw the element is pulled from the cache and rotated.</p>
             <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">SVG</span><span class="params">( config )</span> {</span>
 
         <span class="keyword">if</span> ( !( <span class="keyword">this</span> <span class="keyword">instanceof</span> SVG ) ) {
+
             <span class="keyword">return</span> <span class="keyword">new</span> SVG( config );
+
         }
 
         <span class="keyword">this</span>.config = config;
+
         <span class="keyword">this</span>.create()
             .set( <span class="string">"class"</span>, <span class="keyword">this</span>.config.class )
             .setText()
@@ -470,8 +484,11 @@ on draw the element is pulled from the cache and rotated.</p>
             <span class="keyword">this</span>.layer = SVG.layers[layerId];
 
             <span class="keyword">if</span> ( !<span class="keyword">this</span>.layer ) {
+
                 SVG.layers[layerId] = <span class="keyword">this</span>.elm;
+
                 <span class="keyword">this</span>.layer = SVG.layers[layerId - <span class="number">1</span>];
+
             }
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
@@ -480,6 +497,7 @@ on draw the element is pulled from the cache and rotated.</p>
         appendTo: <span class="function"><span class="keyword">function</span> <span class="params">( layerId )</span> {</span>
 
             <span class="keyword">this</span>.getLayer( layerId );
+
             <span class="keyword">this</span>.layer.appendChild( <span class="keyword">this</span>.elm );
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
@@ -488,7 +506,9 @@ on draw the element is pulled from the cache and rotated.</p>
         setText: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
             <span class="keyword">if</span> ( <span class="keyword">this</span>.config.textContent ) {
+
                 <span class="keyword">this</span>.elm.appendChild( document.createTextNode( <span class="keyword">this</span>.config.textContent ) );
+
             }
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
@@ -504,8 +524,11 @@ on draw the element is pulled from the cache and rotated.</p>
             <span class="keyword">var</span> prop;
 
             <span class="keyword">for</span> ( prop <span class="keyword">in</span>  <span class="keyword">this</span>.getConfigData() ) {
+
                 <span class="keyword">if</span> ( <span class="keyword">this</span>.config.data.hasOwnProperty( prop ) ) {
+
                     <span class="keyword">this</span>.set( prop, <span class="keyword">this</span>.config.data[prop] );
+
                 }
             }
 
@@ -515,13 +538,16 @@ on draw the element is pulled from the cache and rotated.</p>
         register: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
 
             SVG[<span class="keyword">this</span>.config.class] = <span class="keyword">this</span>;
+
             <span class="keyword">return</span> <span class="keyword">this</span>;
 
         },
         rotate: <span class="function"><span class="keyword">function</span> <span class="params">( degrees, transition )</span> {</span>
 
             <span class="keyword">var</span> origin = <span class="string">"transform-origin: 100 100;"</span>,
+
                 transform = <span class="string">"transform:rotate("</span>+ degrees + <span class="string">"deg);"</span>,
+
                 style = origin + transform +
                     <span class="string">"-ms-"</span> + origin +
                     <span class="string">"-ms-"</span> + transform +
@@ -529,7 +555,9 @@ on draw the element is pulled from the cache and rotated.</p>
                     <span class="string">"-webkit-"</span> + transform;
 
             <span class="keyword">if</span> ( transition === <span class="literal">false</span> ) {
+
                 style += <span class="string">"transition: none;"</span>;
+
             }
 
             <span class="keyword">return</span> <span class="keyword">this</span>.set( <span class="string">"style"</span>, style );
@@ -568,7 +596,9 @@ on draw the element is pulled from the cache and rotated.</p>
     }
 
     <span class="function"><span class="keyword">function</span> <span class="title">initComponent</span><span class="params">()</span> {</span>
+
         elementsComponent.forEach(createElmComponent);
+
     }
 
     app.on( <span class="string">"init"</span>, initComponent );
@@ -625,7 +655,9 @@ we animate the clock.</p>
     }
 
     <span class="function"><span class="keyword">function</span> <span class="title">animationFrameComponent</span><span class="params">(bool)</span> {</span>
+
         intervalData = bool ? setInterval( createDateComponent, <span class="number">1000</span> ) : clearInterval( intervalData );
+
     }
 
     app.on( <span class="string">"animate"</span>, animationFrameComponent );

@@ -75,13 +75,14 @@ var app = {
 //
 // _depends on `topicsComponent`_
 //
-(function mediatorProcess(topicsComponent) {
+(function mediatorProcess( topicsComponent ) {
 
     // We export the `on` and `emit` capabilities.
     // Both are technically IN ports and provide the
     // communication channels used to create IN/OUT ports
     // for other processes.
     app.on = topicsComponent.on;
+
     app.emit = topicsComponent.emit;
 
 }(function () {
@@ -104,6 +105,7 @@ var app = {
     }
 
     return {
+
         on: function ( topic, callback ){
 
             getTopic( topic).push( callback );
@@ -114,7 +116,8 @@ var app = {
             getTopic( topic ).reduce( emitData, data );
 
         }
-    }
+
+    };
 }()));
 
 // The splitProcess transforms dates
@@ -132,6 +135,7 @@ var app = {
         return function getTimeUnitsComponent( segment ) {
 
             var method = "get" + segment.charAt(0).toUpperCase() + segment.substring( 1 );
+
             app.emit( "split/" + segment, date[method]() );
 
         };
@@ -159,6 +163,7 @@ var app = {
 // - [OUT -> degrees "draw/&lt;segment&gt;"]
 //
 (function rotationProcess( timeComponent ) {
+
     var split = {};
 
     function makeRotationSegmentComponent( segment ) {
@@ -166,9 +171,11 @@ var app = {
         return function convertToDegreesComponent( number ) {
 
             if ( split[segment] !== number ) {
+
                 split[segment] = number;
 
                 app.emit( "draw/" + segment, timeComponent[segment].toDegrees( split ) );
+
             }
         };
 
@@ -184,6 +191,7 @@ var app = {
 
 }({
     seconds: {
+
         toDegrees: function ( split ) {
 
             return split.seconds * 6;
@@ -191,6 +199,7 @@ var app = {
         }
     },
     minutes: {
+
         toDegrees: function ( split ) {
 
             return ( split.minutes + ( split.seconds / 60 )) * 6;
@@ -198,6 +207,7 @@ var app = {
         }
     },
     hours: {
+
         toDegrees: function ( split ) {
 
             return ( split.hours % 12 * 30 ) + split.minutes / 2;
@@ -243,6 +253,7 @@ var app = {
 
             }
             if ( !hand.rotated ) {
+
                 hand.rotated = true;
 
                 return hand.rotate( degrees, false );
@@ -269,10 +280,13 @@ var app = {
     function SVG( config ) {
 
         if ( !( this instanceof SVG ) ) {
+
             return new SVG( config );
+
         }
 
         this.config = config;
+
         this.create()
             .set( "class", this.config.class )
             .setText()
@@ -305,8 +319,11 @@ var app = {
             this.layer = SVG.layers[layerId];
 
             if ( !this.layer ) {
+
                 SVG.layers[layerId] = this.elm;
+
                 this.layer = SVG.layers[layerId - 1];
+
             }
 
             return this;
@@ -315,6 +332,7 @@ var app = {
         appendTo: function ( layerId ) {
 
             this.getLayer( layerId );
+
             this.layer.appendChild( this.elm );
 
             return this;
@@ -323,7 +341,9 @@ var app = {
         setText: function () {
 
             if ( this.config.textContent ) {
+
                 this.elm.appendChild( document.createTextNode( this.config.textContent ) );
+
             }
 
             return this;
@@ -339,8 +359,11 @@ var app = {
             var prop;
 
             for ( prop in  this.getConfigData() ) {
+
                 if ( this.config.data.hasOwnProperty( prop ) ) {
+
                     this.set( prop, this.config.data[prop] );
+
                 }
             }
 
@@ -350,13 +373,16 @@ var app = {
         register: function () {
 
             SVG[this.config.class] = this;
+
             return this;
 
         },
         rotate: function ( degrees, transition ) {
 
             var origin = "transform-origin: 100 100;",
+
                 transform = "transform:rotate("+ degrees + "deg);",
+
                 style = origin + transform +
                     "-ms-" + origin +
                     "-ms-" + transform +
@@ -364,7 +390,9 @@ var app = {
                     "-webkit-" + transform;
 
             if ( transition === false ) {
+
                 style += "transition: none;";
+
             }
 
             return this.set( "style", style );
@@ -393,7 +421,9 @@ var app = {
     }
 
     function initComponent() {
+
         elementsComponent.forEach(createElmComponent);
+
     }
 
     app.on( "init", initComponent );
@@ -439,7 +469,9 @@ var app = {
     }
 
     function animationFrameComponent(bool) {
+
         intervalData = bool ? setInterval( createDateComponent, 1000 ) : clearInterval( intervalData );
+
     }
 
     app.on( "animate", animationFrameComponent );

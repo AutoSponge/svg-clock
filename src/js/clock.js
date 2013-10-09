@@ -134,7 +134,7 @@ var app = {
 
         return function getTimeUnitsComponent( segment ) {
 
-            var method = "get" + segment.charAt(0).toUpperCase() + segment.substring( 1 );
+            var method = "get" + segment.charAt( 0 ).toUpperCase() + segment.substring( 1 );
 
             app.emit( "split/" + segment, date[method]() );
 
@@ -202,7 +202,7 @@ var app = {
 
         toDegrees: function ( split ) {
 
-            return ( split.minutes + ( split.seconds / 60 )) * 6;
+            return ( split.minutes + ( split.seconds / 60 ) ) * 6;
 
         }
     },
@@ -381,13 +381,13 @@ var app = {
 
             var origin = "transform-origin: 100 100;",
 
-                transform = "transform:rotate("+ degrees + "deg);",
+                transform = "transform:rotate(" + degrees + "deg);",
 
-                style = origin + transform +
-                    "-ms-" + origin +
-                    "-ms-" + transform +
-                    "-webkit-" + origin +
-                    "-webkit-" + transform;
+                style = origin  + transform +
+                    "-ms-"      + origin    +
+                    "-ms-"      + transform +
+                    "-webkit-"  + origin    +
+                    "-webkit-"  + transform;
 
             if ( transition === false ) {
 
@@ -422,7 +422,7 @@ var app = {
 
     function initComponent() {
 
-        elementsComponent.forEach(createElmComponent);
+        elementsComponent.forEach( createElmComponent );
 
     }
 
@@ -491,15 +491,16 @@ var app = {
 
     function startComponent() {
 
-        app.emit("init");
+        app.emit( "init" );
 
-        app.emit("animate", true);
+        app.emit( "animate", true );
+
     }
 
-    app.on("start", startComponent);
+    app.on( "start", startComponent );
 
 }());
 
-app.emit("start");
+app.emit( "start" );
 
 // the obviously orthogonal "stopProcess" is omitted as an exercise for the reader

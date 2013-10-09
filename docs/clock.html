@@ -256,7 +256,7 @@ for calculating rotation.</p>
 
         <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">getTimeUnitsComponent</span><span class="params">( segment )</span> {</span>
 
-            <span class="keyword">var</span> method = <span class="string">"get"</span> + segment.charAt(<span class="number">0</span>).toUpperCase() + segment.substring( <span class="number">1</span> );
+            <span class="keyword">var</span> method = <span class="string">"get"</span> + segment.charAt( <span class="number">0</span> ).toUpperCase() + segment.substring( <span class="number">1</span> );
 
             app.emit( <span class="string">"split/"</span> + segment, date[method]() );
 
@@ -333,7 +333,7 @@ minutes, and hours into degrees for drawing.</p>
 
         toDegrees: <span class="function"><span class="keyword">function</span> <span class="params">( split )</span> {</span>
 
-            <span class="keyword">return</span> ( split.minutes + ( split.seconds / <span class="number">60</span> )) * <span class="number">6</span>;
+            <span class="keyword">return</span> ( split.minutes + ( split.seconds / <span class="number">60</span> ) ) * <span class="number">6</span>;
 
         }
     },
@@ -546,13 +546,13 @@ on draw the element is pulled from the cache and rotated.</p>
 
             <span class="keyword">var</span> origin = <span class="string">"transform-origin: 100 100;"</span>,
 
-                transform = <span class="string">"transform:rotate("</span>+ degrees + <span class="string">"deg);"</span>,
+                transform = <span class="string">"transform:rotate("</span> + degrees + <span class="string">"deg);"</span>,
 
-                style = origin + transform +
-                    <span class="string">"-ms-"</span> + origin +
-                    <span class="string">"-ms-"</span> + transform +
-                    <span class="string">"-webkit-"</span> + origin +
-                    <span class="string">"-webkit-"</span> + transform;
+                style = origin  + transform +
+                    <span class="string">"-ms-"</span>      + origin    +
+                    <span class="string">"-ms-"</span>      + transform +
+                    <span class="string">"-webkit-"</span>  + origin    +
+                    <span class="string">"-webkit-"</span>  + transform;
 
             <span class="keyword">if</span> ( transition === <span class="literal">false</span> ) {
 
@@ -597,7 +597,7 @@ on draw the element is pulled from the cache and rotated.</p>
 
     <span class="function"><span class="keyword">function</span> <span class="title">initComponent</span><span class="params">()</span> {</span>
 
-        elementsComponent.forEach(createElmComponent);
+        elementsComponent.forEach( createElmComponent );
 
     }
 
@@ -688,16 +688,17 @@ the animationFrameProcess</p>
 
     <span class="function"><span class="keyword">function</span> <span class="title">startComponent</span><span class="params">()</span> {</span>
 
-        app.emit(<span class="string">"init"</span>);
+        app.emit( <span class="string">"init"</span> );
 
-        app.emit(<span class="string">"animate"</span>, <span class="literal">true</span>);
+        app.emit( <span class="string">"animate"</span>, <span class="literal">true</span> );
+
     }
 
-    app.on(<span class="string">"start"</span>, startComponent);
+    app.on( <span class="string">"start"</span>, startComponent );
 
 }());
 
-app.emit(<span class="string">"start"</span>);</pre></div></div>
+app.emit( <span class="string">"start"</span> );</pre></div></div>
             
         </li>
         

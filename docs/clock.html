@@ -190,7 +190,9 @@ for other processes.</p>
 
     <span class="function"><span class="keyword">function</span> <span class="title">getTopic</span><span class="params">( topic )</span> {</span>
 
-        <span class="keyword">return</span> ( cache[topic] = cache[topic] || [] );
+        <span class="keyword">var</span> list = cache[topic] = cache[topic] || [];
+
+        <span class="keyword">return</span> list;
 
     }</pre></div></div>
             

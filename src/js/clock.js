@@ -91,7 +91,9 @@ var app = {
 
     function getTopic( topic ) {
 
-        return ( cache[topic] = cache[topic] || [] );
+        var list = cache[topic] = cache[topic] || [];
+
+        return list;
 
     }
 

@@ -26,16 +26,16 @@
 //
 // - Information Packets (IPs) - this is the data parameter passed to `app.emit`
 // - Processes - discrete functions encapsulating component(s),
-// their *DATA*, and *IN*/*OUT* port(s)
+// their __DATA__, and __IN__/__OUT__ port(s)
 // - Components - functions used within a process
 // - Data - variables shared by components
-// - IN port - a channel used to send IP to a process
-// - OUT port - a channel used to send IP from a process
+// - __IN__ port - a channel used to send IP to a process
+// - __OUT__ port - a channel used to send IP from a process
 //
 // I use this notation to denote ports:
 //
-// - IN port: &lt;IP type&gt; &lt;channel&gt; -> IN
-// - OUT port: OUT -> &lt;IP type> &lt;channel&gt;
+// - __IN__ port: &lt;IP type&gt; &lt;channel&gt; -> __IN__
+// - __OUT__ port: __OUT__ -> &lt;IP type> &lt;channel&gt;
 // - Conditional port: [&lt;port&gt;]
 //
 // Separation of Concerns (SOC)
@@ -71,15 +71,15 @@ var app = {
 // The mediatorProcess installs topicsComponent methods
 // to app on instantiation.
 //
-// *mediatorProcess*
+// __mediatorProcess__
 //
 // _depends on `topicsComponent`_
 //
 (function mediatorProcess( topicsComponent ) {
 
     // We export the `on` and `emit` capabilities.
-    // Both are technically IN ports and provide the
-    // communication channels used to create IN/OUT ports
+    // Both are technically __IN__ ports and provide the
+    // communication channels used to create __IN__/__OUT__ ports
     // for other processes.
     app.on = topicsComponent.on;
 
@@ -125,10 +125,10 @@ var app = {
 // The splitProcess transforms dates
 // for calculating rotation.
 //
-// *splitProcess*
+// __splitProcess__
 //
-// - date "createDate" -> IN
-// - OUT -> integer "split/&lt;segment&gt;"
+// - date "createDate" -> __IN__
+// - __OUT__ -> integer "split/&lt;segment&gt;"
 //
 (function splitProcess() {
 
@@ -157,12 +157,12 @@ var app = {
 // minutes, and hours into degrees for drawing.
 //
 //
-// *rotationProcess*
+// __rotationProcess__
 //
 // _depends on `timeComponent`_
 //
-// - integer "split&lt;segment&gt;" -> IN
-// - [OUT -> degrees "draw/&lt;segment&gt;"]
+// - integer "split&lt;segment&gt;" -> __IN__
+// - [____OUT____ -> degrees "draw/&lt;segment&gt;"]
 //
 (function rotationProcess( timeComponent ) {
 
@@ -222,12 +222,12 @@ var app = {
 // on create, drawProcess passes element to SVG and caches the SVG element
 // on draw the element is pulled from the cache and rotated.
 //
-// *drawProcess*
+// __drawProcess__
 //
 // _depends on `SVG`_
 //
-// - element "create" -> IN
-// - degrees "draw/&lt;segment&gt;" -> IN
+// - element "create" -> __IN__
+// - degrees "draw/&lt;segment&gt;" -> __IN__
 //
 (function drawProcess( SVG ) {
 
@@ -408,12 +408,12 @@ var app = {
 
 // The initProcess sends elements to be created.
 //
-// *initProcess*
+// __initProcess__
 //
 // _depends on `elementsComponent`_
 //
-// - null "init" -> IN
-// - OUT -> element "create"
+// - null "init" -> __IN__
+// - __OUT__ -> element "create"
 //
 (function initProcess( elementsComponent ) {
 
@@ -456,10 +456,10 @@ var app = {
 // The animationFrameProcess controls how often
 // we animate the clock.
 //
-// *animationFrameProcess*
+// __animationFrameProcess__
 //
-// - boolean "animate" -> IN
-// - OUT -> date "createDate"
+// - boolean "animate" -> __IN__
+// - __OUT__ -> date "createDate"
 //
 (function animationFrameProcess() {
 
@@ -483,11 +483,11 @@ var app = {
 // The startProcess sends elements to be created then beings
 // the animationFrameProcess
 //
-// *startProcess*
+// __startProcess__
 //
-// - null "start" -> IN
-// - OUT -> null "init"
-// - OUT -> bool "animate"
+// - null "start" -> __IN__
+// - __OUT__ -> null "init"
+// - __OUT__ -> bool "animate"
 //
 (function startProcess() {
 

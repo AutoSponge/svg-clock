@@ -84,16 +84,16 @@ principles used in FBP.</p>
 <ul>
 <li>Information Packets (IPs) - this is the data parameter passed to <code>app.emit</code></li>
 <li>Processes - discrete functions encapsulating component(s),
-their <em>DATA</em>, and <em>IN</em>/<em>OUT</em> port(s)</li>
+their <strong>DATA</strong>, and <strong>IN</strong>/<strong>OUT</strong> port(s)</li>
 <li>Components - functions used within a process</li>
 <li>Data - variables shared by components</li>
-<li>IN port - a channel used to send IP to a process</li>
-<li>OUT port - a channel used to send IP from a process</li>
+<li><strong>IN</strong> port - a channel used to send IP to a process</li>
+<li><strong>OUT</strong> port - a channel used to send IP from a process</li>
 </ul>
 <p>I use this notation to denote ports:</p>
 <ul>
-<li>IN port: &lt;IP type&gt; &lt;channel&gt; -&gt; IN</li>
-<li>OUT port: OUT -&gt; &lt;IP type&gt; &lt;channel&gt;</li>
+<li><strong>IN</strong> port: &lt;IP type&gt; &lt;channel&gt; -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> port: <strong>OUT</strong> -&gt; &lt;IP type&gt; &lt;channel&gt;</li>
 <li>Conditional port: [&lt;port&gt;]</li>
 </ul>
 <h2>Separation of Concerns (SOC)</h2>
@@ -157,7 +157,7 @@ more maintainable code base.</p>
               </div>
               <p>The mediatorProcess installs topicsComponent methods
 to app on instantiation.</p>
-<p><em>mediatorProcess</em></p>
+<p><strong>mediatorProcess</strong></p>
 <p><em>depends on <code>topicsComponent</code></em></p>
 
             </div>
@@ -174,8 +174,8 @@ to app on instantiation.</p>
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>We export the <code>on</code> and <code>emit</code> capabilities.
-Both are technically IN ports and provide the
-communication channels used to create IN/OUT ports
+Both are technically <strong>IN</strong> ports and provide the
+communication channels used to create <strong>IN</strong>/<strong>OUT</strong> ports
 for other processes.</p>
 
             </div>
@@ -244,10 +244,10 @@ for other processes.</p>
               </div>
               <p>The splitProcess transforms dates
 for calculating rotation.</p>
-<p><em>splitProcess</em></p>
+<p><strong>splitProcess</strong></p>
 <ul>
-<li>date &quot;createDate&quot; -&gt; IN</li>
-<li>OUT -&gt; integer &quot;split/&lt;segment&gt;&quot;</li>
+<li>date &quot;createDate&quot; -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; integer &quot;split/&lt;segment&gt;&quot;</li>
 </ul>
 
             </div>
@@ -286,11 +286,11 @@ for calculating rotation.</p>
               </div>
               <p>The rotationProcess converts seconds,
 minutes, and hours into degrees for drawing.</p>
-<p><em>rotationProcess</em></p>
+<p><strong>rotationProcess</strong></p>
 <p><em>depends on <code>timeComponent</code></em></p>
 <ul>
-<li>integer &quot;split&lt;segment&gt;&quot; -&gt; IN</li>
-<li>[OUT -&gt; degrees &quot;draw/&lt;segment&gt;&quot;]</li>
+<li>integer &quot;split&lt;segment&gt;&quot; -&gt; <strong>IN</strong></li>
+<li>[<strong><strong>OUT</strong></strong> -&gt; degrees &quot;draw/&lt;segment&gt;&quot;]</li>
 </ul>
 
             </div>
@@ -361,11 +361,11 @@ minutes, and hours into degrees for drawing.</p>
               <p>The drawProcess draws objects on the DOM
 on create, drawProcess passes element to SVG and caches the SVG element
 on draw the element is pulled from the cache and rotated.</p>
-<p><em>drawProcess</em></p>
+<p><strong>drawProcess</strong></p>
 <p><em>depends on <code>SVG</code></em></p>
 <ul>
-<li>element &quot;create&quot; -&gt; IN</li>
-<li>degrees &quot;draw/&lt;segment&gt;&quot; -&gt; IN</li>
+<li>element &quot;create&quot; -&gt; <strong>IN</strong></li>
+<li>degrees &quot;draw/&lt;segment&gt;&quot; -&gt; <strong>IN</strong></li>
 </ul>
 
             </div>
@@ -581,11 +581,11 @@ on draw the element is pulled from the cache and rotated.</p>
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>The initProcess sends elements to be created.</p>
-<p><em>initProcess</em></p>
+<p><strong>initProcess</strong></p>
 <p><em>depends on <code>elementsComponent</code></em></p>
 <ul>
-<li>null &quot;init&quot; -&gt; IN</li>
-<li>OUT -&gt; element &quot;create&quot;</li>
+<li>null &quot;init&quot; -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; element &quot;create&quot;</li>
 </ul>
 
             </div>
@@ -639,10 +639,10 @@ on draw the element is pulled from the cache and rotated.</p>
               </div>
               <p>The animationFrameProcess controls how often
 we animate the clock.</p>
-<p><em>animationFrameProcess</em></p>
+<p><strong>animationFrameProcess</strong></p>
 <ul>
-<li>boolean &quot;animate&quot; -&gt; IN</li>
-<li>OUT -&gt; date &quot;createDate&quot;</li>
+<li>boolean &quot;animate&quot; -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; date &quot;createDate&quot;</li>
 </ul>
 
             </div>
@@ -677,11 +677,11 @@ we animate the clock.</p>
               </div>
               <p>The startProcess sends elements to be created then beings
 the animationFrameProcess</p>
-<p><em>startProcess</em></p>
+<p><strong>startProcess</strong></p>
 <ul>
-<li>null &quot;start&quot; -&gt; IN</li>
-<li>OUT -&gt; null &quot;init&quot;</li>
-<li>OUT -&gt; bool &quot;animate&quot;</li>
+<li>null &quot;start&quot; -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; null &quot;init&quot;</li>
+<li><strong>OUT</strong> -&gt; bool &quot;animate&quot;</li>
 </ul>
 
             </div>

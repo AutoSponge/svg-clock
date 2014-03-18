@@ -60,8 +60,8 @@
 // I hope to demonstrate that the techniques above lend to a
 // more maintainable code base.
 
-// [Clock](./Clock.html)
-var Clock = require( "./Clock" );
+// [Clock](./clock.html)
+var Clock = require( "./clock" );
 
 [
 // [splitProcess](./splitProcess.html)

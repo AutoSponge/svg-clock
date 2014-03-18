@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>app.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>app.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h2 id="svg-clock">SVG Clock</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This SVG clock demo was build to highlight the following;</p>
+<ul>
+<li>Modern web techniques (HTML5)</li>
+<li>Modern build processes (Gulp, Browserify)</li>
+<li>Flow-based Programming (FBP) (as a design pattern)</li>
+<li>Separation of concerns (SoC)</li>
+<li>Design impacts on complexity and maintainability</li>
+</ul>
+<h2 id="html5">HTML5</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>This demo highlights the benefits of drawing/animating SVG graphics with css and JavaScript.</p>
+<h2 id="build">Build</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Gulp provides a fast and simple interface to build the project.
+Browserify allows use of modules from NodeJS and injects dependencies.</p>
+<h2 id="flow-based-programming-fbp-">Flow-based Programming (FBP)</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>This project was inspired by the
+<a href="http://noflojs.org/noflo-ui/#example/6699161">clock app</a>
+design from <a href="http://noflojs.org/">NoFlo</a>. This is not an attempt at
+building an FBP engine, merely an exercise at following the design
+principles used in FBP.</p>
+<p>The major principles used here include:</p>
+<ul>
+<li>Information Packets (IPs) - this is the data parameter passed to <code>app.emit</code></li>
+<li>Processes - discrete functions encapsulating component(s),
+their <strong>DATA</strong>, and <strong>IN</strong>/<strong>OUT</strong> port(s)</li>
+<li>Components - functions used within a process</li>
+<li>Data - variables shared by components</li>
+<li><strong>IN</strong> port - a channel used to send IP to a process</li>
+<li><strong>OUT</strong> port - a channel used to send IP from a process</li>
+</ul>
+<p>I use this notation to denote ports:</p>
+<ul>
+<li><strong>IN</strong> port: &lt;IP type&gt; &lt;channel&gt; -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> port: <strong>OUT</strong> -&gt; &lt;IP type&gt; &lt;channel&gt;</li>
+<li>Conditional port: [&lt;port&gt;]</li>
+</ul>
+<h2 id="separation-of-concerns-soc-">Separation of Concerns (SOC)</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Whenever possible, this demo strives to isolate data and logic to the
+components and processes using them.  This helps make code modular,
+reusable, and testable.</p>
+<h2 id="complexity-and-maintainability">Complexity and Maintainability</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Each module should be as complex as it needs to be, and no more.
+Please compare this project to others using a tool like
+<a href="http://jscomplexity.org/">JSComplexity</a> or
+<a href="https://github.com/jsoverson/plato">Plato</a>.
+I hope to demonstrate that the techniques above lend to a
+more maintainable code base.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p><a href="./clock.html">Clock</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Clock = <span class="hljs-built_in">require</span>( <span class="hljs-string">"./clock"</span> );
+
+[</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p><a href="./splitProcess.html">splitProcess</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./splitProcess"</span> ),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p><a href="./rotationProcess.html">rotationProcess</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./rotationProcess"</span> ),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p><a href="./animationFrameProcess.html">animationFrameProcess</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./animationFrameProcess"</span> ),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p><a href="./drawProcess.html">drawProcess</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./drawProcess"</span> ),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p><a href="./initProcess.html">initProcess</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./initProcess"</span> ),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p><a href="./startProcess.html">startProcess</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./startProcess"</span> )
+].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( app, process )</span> {</span>
+              process( app );
+              <span class="hljs-keyword">return</span> app;
+          }, <span class="hljs-keyword">new</span> Clock() ).emit( <span class="hljs-string">"start"</span> );</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

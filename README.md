@@ -3,6 +3,6 @@ svg-clock
 
 Tutorial app: svg implementation of an analog-style clock
 
-[show the clock](https://rawgithub.com/AutoSponge/svg-clock/master/index.html)
+[show the clock](http://autosponge.github.io/svg-clock/index.html)
 
-[link to documentation](https://rawgithub.com/AutoSponge/svg-clock/master/docs/clock.html)
+[link to documentation](http://autosponge.github.io/svg-clock/docs/js/app.html)

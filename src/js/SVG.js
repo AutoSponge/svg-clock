@@ -1,16 +1,10 @@
 // keep the interface fluent
 function SVG( config ) {
 
-    if ( !( this instanceof SVG ) ) {
-
-        return new SVG( config );
-
-    }
-
     this.config = config;
 
     this.create()
-        .set( "class", this.config.class )
+        .set( 'class', this.config.class )
         .setText()
         .setData()
         .register()
@@ -18,13 +12,13 @@ function SVG( config ) {
 }
 
 // store layers as a class property
-SVG.layers = [document.getElementsByTagName( "body" )[0]];
+SVG.layers = [document.getElementsByTagName( 'body' )[0]];
 
 SVG.prototype = {
 
     create: function () {
 
-        this.elm = document.createElementNS( "http://www.w3.org/2000/svg", this.config.type );
+        this.elm = document.createElementNS( 'http://www.w3.org/2000/svg', this.config.type );
 
         return this;
 
@@ -101,25 +95,29 @@ SVG.prototype = {
     },
     rotate: function ( degrees, transition ) {
 
-        var origin = "transform-origin: 100 100;",
+        var origin = 'transform-origin: 100 100;',
 
-            transform = "transform:rotate(" + degrees + "deg);",
+            transform = 'transform:rotate(' + degrees + 'deg);',
 
             style = origin + transform +
-                "-ms-" + origin +
-                "-ms-" + transform +
-                "-webkit-" + origin +
-                "-webkit-" + transform;
+                '-ms-' + origin +
+                '-ms-' + transform +
+                '-webkit-' + origin +
+                '-webkit-' + transform;
 
         if ( transition === false ) {
 
-            style += "transition: none;";
+            style += 'transition: none;';
 
         }
 
-        return this.set( "style", style );
+        return this.set( 'style', style );
 
     }
 };
 
-module.exports = SVG;
+module.exports = function ( config ) {
+
+    return new SVG( config );
+
+};

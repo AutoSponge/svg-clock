@@ -31,40 +31,68 @@
 <p><strong>initProcess</strong></p>
 <p><em>depends on <code>elementsComponent</code></em></p>
 <ul>
-<li>null “init” -&gt; <strong>IN</strong></li>
-<li><strong>OUT</strong> -&gt; element “create”</li>
+<li>null ‘init’ -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; element ‘create’</li>
 </ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> elementsComponent = [
-    {type: <span class="hljs-string">"svg"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"container"</span>, data: {
-        version: <span class="hljs-string">"1.2"</span>, baseProfile: <span class="hljs-string">"tiny"</span>, viewBox: <span class="hljs-string">"0 0 200 200"</span>, <span class="hljs-string">"enable-background"</span>: <span class="hljs-string">"0 0 200 200"</span>}},
-    {type: <span class="hljs-string">"circle"</span>, layer: <span class="hljs-number">2</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"clock"</span>, data: {
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> elementsComponent = [</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>jshint ignore:start</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    {type: <span class="hljs-string">'svg'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'container'</span>, data: {
+        version: <span class="hljs-string">'1.2'</span>, baseProfile: <span class="hljs-string">'tiny'</span>, viewBox: <span class="hljs-string">'0 0 200 200'</span>, <span class="hljs-string">'enable-background'</span>: <span class="hljs-string">'0 0 200 200'</span>}},
+    {type: <span class="hljs-string">'circle'</span>, layer: <span class="hljs-number">2</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'clock'</span>, data: {
         cx: <span class="hljs-number">100</span>, cy: <span class="hljs-number">100</span>, r: <span class="hljs-number">90</span>}},
-    {type: <span class="hljs-string">"text"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"text"</span>, textContent: <span class="hljs-string">"12"</span>, data: {
+    {type: <span class="hljs-string">'text'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'text'</span>, textContent: <span class="hljs-string">'12'</span>, data: {
         x: <span class="hljs-number">92</span>, y: <span class="hljs-number">30</span>}},
-    {type: <span class="hljs-string">"text"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"text"</span>, textContent: <span class="hljs-string">"3"</span>, data: {
+    {type: <span class="hljs-string">'text'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'text'</span>, textContent: <span class="hljs-string">'3'</span>, data: {
         x: <span class="hljs-number">175</span>, y: <span class="hljs-number">106</span>}},
-    {type: <span class="hljs-string">"text"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"text"</span>, textContent: <span class="hljs-string">"6"</span>, data: {
+    {type: <span class="hljs-string">'text'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'text'</span>, textContent: <span class="hljs-string">'6'</span>, data: {
         x: <span class="hljs-number">96</span>, y: <span class="hljs-number">180</span>}},
-    {type: <span class="hljs-string">"text"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"text"</span>, textContent: <span class="hljs-string">"9"</span>, data: {
+    {type: <span class="hljs-string">'text'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'text'</span>, textContent: <span class="hljs-string">'9'</span>, data: {
         x: <span class="hljs-number">18</span>, y: <span class="hljs-number">106</span>}},
-    {type: <span class="hljs-string">"line"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"hours"</span>, data: {
+    {type: <span class="hljs-string">'line'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'hours'</span>, data: {
         x1: <span class="hljs-number">100</span>, y1: <span class="hljs-number">45</span>, x2: <span class="hljs-number">100</span>, y2: <span class="hljs-number">100</span>}},
-    {type: <span class="hljs-string">"line"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"minutes"</span>, data: {
+    {type: <span class="hljs-string">'line'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'minutes'</span>, data: {
         x1: <span class="hljs-number">100</span>, y1: <span class="hljs-number">25</span>, x2: <span class="hljs-number">100</span>, y2: <span class="hljs-number">100</span>}},
-    {type: <span class="hljs-string">"line"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"seconds"</span>, data: {
+    {type: <span class="hljs-string">'line'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'seconds'</span>, data: {
         x1: <span class="hljs-number">100</span>, y1: <span class="hljs-number">15</span>, x2: <span class="hljs-number">100</span>, y2: <span class="hljs-number">100</span>}},
-    {type: <span class="hljs-string">"circle"</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">"pin"</span>, data: {
-        cx: <span class="hljs-number">100</span>, cy: <span class="hljs-number">100</span>, r: <span class="hljs-number">2</span>}}
-];
+    {type: <span class="hljs-string">'circle'</span>, layer: <span class="hljs-number">1</span>, <span class="hljs-keyword">class</span>: <span class="hljs-string">'pin'</span>, data: {
+        cx: <span class="hljs-number">100</span>, cy: <span class="hljs-number">100</span>, r: <span class="hljs-number">2</span>}}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>jshint ignore:end</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>];
 
 module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initProcess</span><span class="hljs-params">( app )</span> {</span>
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createElmComponent</span><span class="hljs-params">( element )</span> {</span>
 
-        app.emit( <span class="hljs-string">"create"</span>, element );
+        app.emit( <span class="hljs-string">'create'</span>, element );
     }
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initComponent</span><span class="hljs-params">()</span> {</span>
@@ -73,7 +101,7 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
 
     }
 
-    app.on( <span class="hljs-string">"init"</span>, initComponent );
+    app.on( <span class="hljs-string">'init'</span>, initComponent );
 
 };</pre></div></div>
             

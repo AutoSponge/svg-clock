@@ -31,8 +31,8 @@
 for calculating rotation.</p>
 <p><strong>splitProcess</strong></p>
 <ul>
-<li>date “createDate” -&gt; <strong>IN</strong></li>
-<li><strong>OUT</strong> -&gt; integer “split/&lt;segment&gt;”</li>
+<li>date ‘createDate’ -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; integer ‘split/&lt;segment&gt;’</li>
 </ul>
 
             </div>
@@ -43,9 +43,9 @@ for calculating rotation.</p>
 
         <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTimeUnitsComponent</span><span class="hljs-params">( segment )</span> {</span>
 
-            <span class="hljs-keyword">var</span> method = <span class="hljs-string">"get"</span> + segment.charAt( <span class="hljs-number">0</span> ).toUpperCase() + segment.substring( <span class="hljs-number">1</span> );
+            <span class="hljs-keyword">var</span> method = <span class="hljs-string">'get'</span> + segment.charAt( <span class="hljs-number">0</span> ).toUpperCase() + segment.substring( <span class="hljs-number">1</span> );
 
-            app.emit( <span class="hljs-string">"split/"</span> + segment, date[method]() );
+            app.emit( <span class="hljs-string">'split/'</span> + segment, date[method]() );
 
         };
 
@@ -57,7 +57,7 @@ for calculating rotation.</p>
 
     }
 
-    app.on( <span class="hljs-string">"createDate"</span>, splitComponent );
+    app.on( <span class="hljs-string">'createDate'</span>, splitComponent );
 
 };</pre></div></div>
             

@@ -6,8 +6,8 @@
 //
 // _depends on `timeComponent`_
 //
-// - integer "split&lt;segment&gt;" -> __IN__
-// - [____OUT____ -> degrees "draw/&lt;segment&gt;"]
+// - integer 'split&lt;segment&gt;' -> __IN__
+// - [____OUT____ -> degrees 'draw/&lt;segment&gt;']
 //
 var timeComponent = {
     seconds: {
@@ -48,7 +48,7 @@ module.exports = function rotationProcess( app ) {
 
                 split[segment] = number;
 
-                app.emit( "draw/" + segment, timeComponent[segment].toDegrees( split ) );
+                app.emit( 'draw/' + segment, timeComponent[segment].toDegrees( split ) );
 
             }
         };
@@ -57,7 +57,7 @@ module.exports = function rotationProcess( app ) {
 
     function makeRotationComponent( segment ) {
 
-        app.on( "split/" + segment, makeRotationSegmentComponent( segment ) );
+        app.on( 'split/' + segment, makeRotationSegmentComponent( segment ) );
 
     }
 

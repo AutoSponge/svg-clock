@@ -33,16 +33,10 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SVG</span><span class="hljs-params">( config )</span> {</span>
 
-    <span class="hljs-keyword">if</span> ( !( <span class="hljs-keyword">this</span> <span class="hljs-keyword">instanceof</span> SVG ) ) {
-
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> SVG( config );
-
-    }
-
     <span class="hljs-keyword">this</span>.config = config;
 
     <span class="hljs-keyword">this</span>.create()
-        .set( <span class="hljs-string">"class"</span>, <span class="hljs-keyword">this</span>.config.class )
+        .set( <span class="hljs-string">'class'</span>, <span class="hljs-keyword">this</span>.config.class )
         .setText()
         .setData()
         .register()
@@ -62,13 +56,13 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>SVG.layers = [document.getElementsByTagName( <span class="hljs-string">"body"</span> )[<span class="hljs-number">0</span>]];
+            <div class="content"><div class='highlight'><pre>SVG.layers = [document.getElementsByTagName( <span class="hljs-string">'body'</span> )[<span class="hljs-number">0</span>]];
 
 SVG.prototype = {
 
     create: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
 
-        <span class="hljs-keyword">this</span>.elm = document.createElementNS( <span class="hljs-string">"http://www.w3.org/2000/svg"</span>, <span class="hljs-keyword">this</span>.config.type );
+        <span class="hljs-keyword">this</span>.elm = document.createElementNS( <span class="hljs-string">'http://www.w3.org/2000/svg'</span>, <span class="hljs-keyword">this</span>.config.type );
 
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
 
@@ -145,28 +139,32 @@ SVG.prototype = {
     },
     rotate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( degrees, transition )</span> {</span>
 
-        <span class="hljs-keyword">var</span> origin = <span class="hljs-string">"transform-origin: 100 100;"</span>,
+        <span class="hljs-keyword">var</span> origin = <span class="hljs-string">'transform-origin: 100 100;'</span>,
 
-            transform = <span class="hljs-string">"transform:rotate("</span> + degrees + <span class="hljs-string">"deg);"</span>,
+            transform = <span class="hljs-string">'transform:rotate('</span> + degrees + <span class="hljs-string">'deg);'</span>,
 
             style = origin + transform +
-                <span class="hljs-string">"-ms-"</span> + origin +
-                <span class="hljs-string">"-ms-"</span> + transform +
-                <span class="hljs-string">"-webkit-"</span> + origin +
-                <span class="hljs-string">"-webkit-"</span> + transform;
+                <span class="hljs-string">'-ms-'</span> + origin +
+                <span class="hljs-string">'-ms-'</span> + transform +
+                <span class="hljs-string">'-webkit-'</span> + origin +
+                <span class="hljs-string">'-webkit-'</span> + transform;
 
         <span class="hljs-keyword">if</span> ( transition === <span class="hljs-literal">false</span> ) {
 
-            style += <span class="hljs-string">"transition: none;"</span>;
+            style += <span class="hljs-string">'transition: none;'</span>;
 
         }
 
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.set( <span class="hljs-string">"style"</span>, style );
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.set( <span class="hljs-string">'style'</span>, style );
 
     }
 };
 
-module.exports = SVG;</pre></div></div>
+module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( config )</span> {</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> SVG( config );
+
+};</pre></div></div>
             
         </li>
         

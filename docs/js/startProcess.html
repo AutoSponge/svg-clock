@@ -31,9 +31,9 @@
 the animationFrameProcess</p>
 <p><strong>startProcess</strong></p>
 <ul>
-<li>null “start” -&gt; <strong>IN</strong></li>
-<li><strong>OUT</strong> -&gt; null “init”</li>
-<li><strong>OUT</strong> -&gt; bool “animate”</li>
+<li>null ‘start’ -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; null ‘init’</li>
+<li><strong>OUT</strong> -&gt; bool ‘animate’</li>
 </ul>
 
             </div>
@@ -42,13 +42,13 @@ the animationFrameProcess</p>
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">startComponent</span><span class="hljs-params">()</span> {</span>
 
-        app.emit( <span class="hljs-string">"init"</span> );
+        app.emit( <span class="hljs-string">'init'</span> );
 
-        app.emit( <span class="hljs-string">"animate"</span>, <span class="hljs-literal">true</span> );
+        app.emit( <span class="hljs-string">'animate'</span>, <span class="hljs-literal">true</span> );
 
     }
 
-    app.on( <span class="hljs-string">"start"</span>, startComponent );
+    app.on( <span class="hljs-string">'start'</span>, startComponent );
 
 };</pre></div></div>
             

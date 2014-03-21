@@ -162,7 +162,7 @@ more maintainable code base.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Clock = <span class="hljs-built_in">require</span>( <span class="hljs-string">"./clock"</span> );
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Clock = <span class="hljs-built_in">require</span>( <span class="hljs-string">'./clock'</span> );
 
 [</pre></div></div>
             
@@ -179,7 +179,7 @@ more maintainable code base.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./splitProcess"</span> ),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">'./splitProcess'</span> ),</pre></div></div>
             
         </li>
         
@@ -194,7 +194,7 @@ more maintainable code base.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./rotationProcess"</span> ),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">'./rotationProcess'</span> ),</pre></div></div>
             
         </li>
         
@@ -209,7 +209,7 @@ more maintainable code base.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./animationFrameProcess"</span> ),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">'./animationFrameProcess'</span> ),</pre></div></div>
             
         </li>
         
@@ -224,7 +224,7 @@ more maintainable code base.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./drawProcess"</span> ),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">'./drawProcess'</span> ),</pre></div></div>
             
         </li>
         
@@ -239,7 +239,7 @@ more maintainable code base.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./initProcess"</span> ),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">'./initProcess'</span> ),</pre></div></div>
             
         </li>
         
@@ -254,11 +254,14 @@ more maintainable code base.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">"./startProcess"</span> )
-].reduce( <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( app, process )</span> {</span>
-              process( app );
-              <span class="hljs-keyword">return</span> app;
-          }, <span class="hljs-keyword">new</span> Clock() ).emit( <span class="hljs-string">"start"</span> );</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-built_in">require</span>( <span class="hljs-string">'./startProcess'</span> )
+].reduce(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( app, process )</span> {</span>
+
+        process( app );
+
+        <span class="hljs-keyword">return</span> app;
+
+    }, <span class="hljs-keyword">new</span> Clock() ).emit( <span class="hljs-string">'start'</span> );</pre></div></div>
             
         </li>
         

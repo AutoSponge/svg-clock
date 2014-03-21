@@ -31,8 +31,8 @@
 we animate the clock.</p>
 <p><strong>animationFrameProcess</strong></p>
 <ul>
-<li>boolean “animate” -&gt; <strong>IN</strong></li>
-<li><strong>OUT</strong> -&gt; date “createDate”</li>
+<li>boolean ‘animate’ -&gt; <strong>IN</strong></li>
+<li><strong>OUT</strong> -&gt; date ‘createDate’</li>
 </ul>
 
             </div>
@@ -43,7 +43,7 @@ we animate the clock.</p>
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createDateComponent</span><span class="hljs-params">()</span> {</span>
 
-        app.emit( <span class="hljs-string">"createDate"</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() );
+        app.emit( <span class="hljs-string">'createDate'</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() );
     }
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">animationFrameComponent</span><span class="hljs-params">( bool )</span> {</span>
@@ -52,7 +52,7 @@ we animate the clock.</p>
 
     }
 
-    app.on( <span class="hljs-string">"animate"</span>, animationFrameComponent );
+    app.on( <span class="hljs-string">'animate'</span>, animationFrameComponent );
 
 };</pre></div></div>
             

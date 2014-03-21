@@ -1,5 +1,5 @@
 // [SVG](./SVG.html)
-var SVG = require( "./SVG" );
+var svg = require( './SVG' );
 
 // The drawProcess draws objects on the DOM
 // on create, drawProcess passes element to SVG and caches the SVG element
@@ -9,8 +9,8 @@ var SVG = require( "./SVG" );
 //
 // _depends on `SVG`_
 //
-// - element "create" -> __IN__
-// - degrees "draw/&lt;segment&gt;" -> __IN__
+// - element 'create' -> __IN__
+// - degrees 'draw/&lt;segment&gt;' -> __IN__
 //
 function resetComponent( hand ) {
 
@@ -28,7 +28,7 @@ function drawSegmentComponent( segment ) {
 
     return function drawSegmentDegreesComponent( degrees ) {
 
-        var hand = SVG[segment];
+        var hand = svg[segment];
 
         if ( degrees === 0 && hand.rotated ) {
 
@@ -52,11 +52,11 @@ module.exports = function drawProcess( app ) {
 
     function drawComponent( segment ) {
 
-        app.on( "draw/" + segment, drawSegmentComponent( segment ) );
+        app.on( 'draw/' + segment, drawSegmentComponent( segment ) );
     }
 
     app.segments.forEach( drawComponent );
 
-    app.on( "create", SVG );
+    app.on( 'create', svg );
 
 };

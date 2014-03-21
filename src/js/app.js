@@ -61,22 +61,25 @@
 // more maintainable code base.
 
 // [Clock](./clock.html)
-var Clock = require( "./clock" );
+var Clock = require( './clock' );
 
 [
 // [splitProcess](./splitProcess.html)
-    require( "./splitProcess" ),
+    require( './splitProcess' ),
 // [rotationProcess](./rotationProcess.html)
-    require( "./rotationProcess" ),
+    require( './rotationProcess' ),
 // [animationFrameProcess](./animationFrameProcess.html)
-    require( "./animationFrameProcess" ),
+    require( './animationFrameProcess' ),
 // [drawProcess](./drawProcess.html)
-    require( "./drawProcess" ),
+    require( './drawProcess' ),
 // [initProcess](./initProcess.html)
-    require( "./initProcess" ),
+    require( './initProcess' ),
 // [startProcess](./startProcess.html)
-    require( "./startProcess" )
-].reduce( function ( app, process ) {
-              process( app );
-              return app;
-          }, new Clock() ).emit( "start" );
+    require( './startProcess' )
+].reduce(function ( app, process ) {
+
+        process( app );
+
+        return app;
+
+    }, new Clock() ).emit( 'start' );

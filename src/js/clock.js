@@ -1,6 +1,6 @@
-var EventEmitter = require( "events" ).EventEmitter;
+var EventEmitter = require( 'events' ).EventEmitter;
 
-var inherits = require( "util" ).inherits;
+var inherits = require( 'util' ).inherits;
 
 // The `Clock` constructor instantiates objects capable of managing events.
 // See [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter)
@@ -16,9 +16,9 @@ var inherits = require( "util" ).inherits;
 function Clock() {
 
     this.segments = [
-        "seconds",
-        "minutes",
-        "hours"
+        'seconds',
+        'minutes',
+        'hours'
     ];
 
 }

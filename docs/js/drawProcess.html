@@ -31,7 +31,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> SVG = <span class="hljs-built_in">require</span>( <span class="hljs-string">"./SVG"</span> );</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> svg = <span class="hljs-built_in">require</span>( <span class="hljs-string">'./SVG'</span> );</pre></div></div>
             
         </li>
         
@@ -48,8 +48,8 @@ on draw the element is pulled from the cache and rotated.</p>
 <p><strong>drawProcess</strong></p>
 <p><em>depends on <code>SVG</code></em></p>
 <ul>
-<li>element “create” -&gt; <strong>IN</strong></li>
-<li>degrees “draw/&lt;segment&gt;” -&gt; <strong>IN</strong></li>
+<li>element ‘create’ -&gt; <strong>IN</strong></li>
+<li>degrees ‘draw/&lt;segment&gt;’ -&gt; <strong>IN</strong></li>
 </ul>
 
             </div>
@@ -70,7 +70,7 @@ on draw the element is pulled from the cache and rotated.</p>
 
     <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">drawSegmentDegreesComponent</span><span class="hljs-params">( degrees )</span> {</span>
 
-        <span class="hljs-keyword">var</span> hand = SVG[segment];
+        <span class="hljs-keyword">var</span> hand = svg[segment];
 
         <span class="hljs-keyword">if</span> ( degrees === <span class="hljs-number">0</span> &amp;&amp; hand.rotated ) {
 
@@ -94,12 +94,12 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">drawComponent</span><span class="hljs-params">( segment )</span> {</span>
 
-        app.on( <span class="hljs-string">"draw/"</span> + segment, drawSegmentComponent( segment ) );
+        app.on( <span class="hljs-string">'draw/'</span> + segment, drawSegmentComponent( segment ) );
     }
 
     app.segments.forEach( drawComponent );
 
-    app.on( <span class="hljs-string">"create"</span>, SVG );
+    app.on( <span class="hljs-string">'create'</span>, svg );
 
 };</pre></div></div>
             

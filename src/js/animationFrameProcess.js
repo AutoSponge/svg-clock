@@ -3,8 +3,8 @@
 //
 // __animationFrameProcess__
 //
-// - boolean "animate" -> __IN__
-// - __OUT__ -> date "createDate"
+// - boolean 'animate' -> __IN__
+// - __OUT__ -> date 'createDate'
 //
 module.exports = function animationFrameProcess( app ) {
 
@@ -12,7 +12,7 @@ module.exports = function animationFrameProcess( app ) {
 
     function createDateComponent() {
 
-        app.emit( "createDate", new Date() );
+        app.emit( 'createDate', new Date() );
     }
 
     function animationFrameComponent( bool ) {
@@ -21,6 +21,6 @@ module.exports = function animationFrameProcess( app ) {
 
     }
 
-    app.on( "animate", animationFrameComponent );
+    app.on( 'animate', animationFrameComponent );
 
 };

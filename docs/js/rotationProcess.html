@@ -32,8 +32,8 @@ minutes, and hours into degrees for drawing.</p>
 <p><strong>rotationProcess</strong></p>
 <p><em>depends on <code>timeComponent</code></em></p>
 <ul>
-<li>integer “split&lt;segment&gt;” -&gt; <strong>IN</strong></li>
-<li>[<strong><strong>OUT</strong></strong> -&gt; degrees “draw/&lt;segment&gt;”]</li>
+<li>integer ‘split&lt;segment&gt;’ -&gt; <strong>IN</strong></li>
+<li>[<strong><strong>OUT</strong></strong> -&gt; degrees ‘draw/&lt;segment&gt;’]</li>
 </ul>
 
             </div>
@@ -77,7 +77,7 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
 
                 split[segment] = number;
 
-                app.emit( <span class="hljs-string">"draw/"</span> + segment, timeComponent[segment].toDegrees( split ) );
+                app.emit( <span class="hljs-string">'draw/'</span> + segment, timeComponent[segment].toDegrees( split ) );
 
             }
         };
@@ -86,7 +86,7 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeRotationComponent</span><span class="hljs-params">( segment )</span> {</span>
 
-        app.on( <span class="hljs-string">"split/"</span> + segment, makeRotationSegmentComponent( segment ) );
+        app.on( <span class="hljs-string">'split/'</span> + segment, makeRotationSegmentComponent( segment ) );
 
     }
 

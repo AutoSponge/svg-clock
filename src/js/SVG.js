@@ -1,6 +1,12 @@
 // keep the interface fluent
 function SVG( config ) {
 
+    if ( !(this instanceof SVG) ) {
+
+        return new SVG( config );
+
+    }
+
     this.config = config;
 
     this.create()
@@ -116,8 +122,4 @@ SVG.prototype = {
     }
 };
 
-module.exports = function ( config ) {
-
-    return new SVG( config );
-
-};
+module.exports = SVG;

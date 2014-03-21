@@ -33,6 +33,12 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SVG</span><span class="hljs-params">( config )</span> {</span>
 
+    <span class="hljs-keyword">if</span> ( !(<span class="hljs-keyword">this</span> <span class="hljs-keyword">instanceof</span> SVG) ) {
+
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> SVG( config );
+
+    }
+
     <span class="hljs-keyword">this</span>.config = config;
 
     <span class="hljs-keyword">this</span>.create()
@@ -160,11 +166,7 @@ SVG.prototype = {
     }
 };
 
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( config )</span> {</span>
-
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> SVG( config );
-
-};</pre></div></div>
+module.exports = SVG;</pre></div></div>
             
         </li>
         
